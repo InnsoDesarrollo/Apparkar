@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_splash">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/copy_loading_parkings"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="47dp" />
+
+
+    <ImageView
+        android:id="@+id/imageView_city"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:src="@mipmap/bg_city_splash"
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_company"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/spacing_xxxxlarge" />
+
+    <ImageView
+        android:id="@+id/imageView_ic_car"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_app"
+        android:layout_alignBottom="@+id/imageView_city"
+        android:layout_marginBottom="-35dp"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
