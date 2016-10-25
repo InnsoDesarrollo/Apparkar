@@ -1,5 +1,7 @@
 package com.innso.apparkar;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
@@ -12,13 +14,25 @@ import android.widget.ImageView;
 
 import com.innso.apparkar.util.GeneralAnimation;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.subjects.PublishSubject;
+
 public class SplashActivity extends AppCompatActivity {
 
-    private Runnable timeSplash = this::finish;
+    private boolean animationEnd;
 
-    private AnimatorSet startAnimation;
+    private boolean loadDataEnd;
+
+    private Runnable timeSplash = this::loadData;
 
     private ImageView imageCar;
+
+    private ImageView imageParkingOption;
+
+    private ImageView imageGasOption;
+
+    private ImageView imageOptionOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,29 +47,56 @@ public class SplashActivity extends AppCompatActivity {
 
         init();
 
-        new Handler().postDelayed(timeSplash, 10000);
+        new Handler().postDelayed(timeSplash, 300);
     }
 
     private void init() {
         imageCar = (ImageView) findViewById(R.id.imageView_ic_car);
+
+        imageParkingOption = (ImageView) findViewById(R.id.imageView_parking);
+
+        imageGasOption = (ImageView) findViewById(R.id.imageView_parking_free);
+
+        imageOptionOther = (ImageView) findViewById(R.id.imageView_wash_car);
 
         imageCar.post(this::initAnimation);
     }
 
     private void initAnimation() {
 
-        startAnimation = new AnimatorSet();
+        AnimatorSet startAnimation = new AnimatorSet();
 
         ObjectAnimator moveCart = (ObjectAnimator) GeneralAnimation.getAppearFromRight(imageCar, 1300, 0, new AccelerateDecelerateInterpolator(), null);
 
-        startAnimation.play(moveCart);
+        ObjectAnimator parkingOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(imageParkingOption, 600);
+
+        ObjectAnimator gasOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(imageGasOption, 600);
+
+        ObjectAnimator otherOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(imageOptionOther, 600);
+
+        startAnimation.playSequentially(moveCart, parkingOption, gasOption, otherOption);
+
+        startAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animationEnd = true;
+                finish();
+            }
+        });
 
         startAnimation.start();
     }
 
+    private void loadData(){
+        loadDataEnd = true;
+        finish();
+    }
+
     public void finish() {
-        setResult(RESULT_OK);
-        super.finish();
+        if(animationEnd && loadDataEnd){
+            setResult(RESULT_OK);
+            super.finish();
+        }
     }
 
 }
