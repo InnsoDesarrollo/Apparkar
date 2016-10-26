@@ -53,6 +53,7 @@
         android:gravity="center"
         android:layout_above="@+id/textView_loading"
         android:layout_below="@+id/imageView_ic_car"
+        android:padding="@dimen/spacing_medium"
         android:weightSum="3">
 
         <ImageView
@@ -71,7 +72,7 @@
             android:layout_weight="1"
             android:padding="@dimen/spacing_xlarge"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_app" />
+            android:src="@mipmap/ic_petrol_pump" />
 
         <ImageView
             android:id="@+id/imageView_wash_car"
@@ -80,7 +81,7 @@
             android:layout_weight="1"
             android:padding="@dimen/spacing_xlarge"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_app" />
+            android:src="@mipmap/ic_other_service" />
 
     </LinearLayout>
 

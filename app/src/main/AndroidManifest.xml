@@ -29,6 +29,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="60c296b1834a7c2e31bf277e06414291e84ded47" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
