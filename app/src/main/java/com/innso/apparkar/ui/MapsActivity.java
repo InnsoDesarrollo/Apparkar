@@ -1,4 +1,4 @@
-package com.innso.apparkar;
+package com.innso.apparkar.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
