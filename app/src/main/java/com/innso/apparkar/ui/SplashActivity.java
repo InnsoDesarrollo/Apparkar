@@ -48,6 +48,7 @@ public class SplashActivity extends AppCompatActivity {
         init();
 
         new Handler().postDelayed(timeSplash, 5000);
+
     }
 
     private void init() {

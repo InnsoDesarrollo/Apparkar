@@ -36,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);
         initViews();
+
     }
 
     private void initViews() {
