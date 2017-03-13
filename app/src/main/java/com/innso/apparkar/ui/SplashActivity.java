@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
+import com.innso.apparkar.R;
 import com.innso.apparkar.util.GeneralAnimation;
 
 import rx.Observable;

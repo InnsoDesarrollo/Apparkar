@@ -32,7 +32,7 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/spacing_xxxxlarge"
+        android:layout_marginTop="@dimen/spacing_xxlarge"
         android:contentDescription="@string/app_name"
         android:src="@mipmap/ic_company" />
 
