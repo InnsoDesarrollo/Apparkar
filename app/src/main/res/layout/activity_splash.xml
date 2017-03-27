@@ -43,6 +43,7 @@
         android:layout_alignBottom="@+id/imageView_city"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-35dp"
+        android:transitionName="logo"
         android:contentDescription="@string/app_name"
         android:src="@mipmap/ic_app" />
 
