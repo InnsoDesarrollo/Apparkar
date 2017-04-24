@@ -4,12 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -17,14 +14,6 @@ import android.widget.ImageView;
 
 import com.innso.apparkar.R;
 import com.innso.apparkar.util.GeneralAnimation;
-
-import java.util.Map;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.subjects.PublishSubject;
-
-import static com.innso.apparkar.R.id.contact;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -96,13 +85,13 @@ public class SplashActivity extends AppCompatActivity {
         startAnimation.start();
     }
 
-    private void loadData(){
+    private void loadData() {
         loadDataEnd = true;
         notifyFinish();
     }
 
     public void notifyFinish() {
-        if(animationEnd && loadDataEnd){
+        if (animationEnd && loadDataEnd) {
             setResult(RESULT_OK);
             finishAfterTransition();
         }
