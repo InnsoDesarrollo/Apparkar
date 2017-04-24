@@ -49,11 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(getResources().getInteger(R.integer.min_height_bottom_map));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-
     }
 
     @Override
