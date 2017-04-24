@@ -1,4 +1,4 @@
-package com.innso.apparkar.ui;
+package com.innso.apparkar.ui.views;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -31,5 +31,6 @@ public class ViewMainHeader extends FrameLayout {
     private void init() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         binding = DataBindingUtil.inflate(inflater, R.layout.view_main_header, this, true);
+        binding.editTextParkingZone.clearFocus();
     }
 }

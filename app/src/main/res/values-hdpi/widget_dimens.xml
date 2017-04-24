@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="height_bottom_map">330dp</dimen>
-    <integer name="min_height_bottom_map">150</integer>
+    <integer name="min_height_bottom_map">145</integer>
 </resources>

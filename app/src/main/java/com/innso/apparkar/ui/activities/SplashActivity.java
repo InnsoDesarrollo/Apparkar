@@ -1,4 +1,4 @@
-package com.innso.apparkar.ui;
+package com.innso.apparkar.ui.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Apparkar</string>
-    <string name="title_activity_maps">Map</string>
-
     <string name="copy_loading_parkings">Cargado Parqueaderos</string>
+
+    <string name="copy.map">Mapa</string>
+    <string name="copy.alarms">Alarmas</string>
+    <string name="copy.favorites">Favoritos</string>
+    <string name="copy.add">Nuevo</string>
 
 </resources>

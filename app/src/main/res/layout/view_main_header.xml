@@ -25,6 +25,7 @@
             android:transitionName="logo" />
 
         <EditText
+            android:id="@+id/editText_parking_zone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_medium"
@@ -32,6 +33,8 @@
             android:layout_toEndOf="@+id/imageView_logo"
             android:layout_toStartOf="@+id/imageView_search"
             android:gravity="center"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="Zona a buscar estacionamiento"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
