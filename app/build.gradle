@@ -79,11 +79,29 @@ dependencies {
     })
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+
+    //Support
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+
+    //Location
     compile 'com.google.android.gms:play-services-maps:9.8.0'
     compile 'com.google.android.gms:play-services-location:9.8.0'
-    compile 'com.android.support:support-v4:25.3.1'
+
+
+    //Injection
+    compile 'com.google.dagger:dagger:2.9'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.9"
+    provided 'javax.annotation:jsr250-api:1.0'
+
+    //Firebase
+    compile 'com.google.firebase:firebase-storage:9.8.0'
+    compile 'com.google.firebase:firebase-database:9.8.0'
+
+
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+
     testCompile 'junit:junit:4.12'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;

@@ -17,7 +17,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
+import com.innso.apparkar.provider.CarWashProvider;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
+
+import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -30,6 +33,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private View bottomSheet;
 
     private GoogleMap mMap;
+
+    @Inject
+    CarWashProvider carWashProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
