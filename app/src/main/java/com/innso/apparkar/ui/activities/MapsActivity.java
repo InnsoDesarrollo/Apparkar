@@ -1,15 +1,12 @@
 package com.innso.apparkar.ui.activities;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,12 +14,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
+import com.innso.apparkar.databinding.ActivityMapsBinding;
 import com.innso.apparkar.provider.CarWashProvider;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 
 import javax.inject.Inject;
-
-import io.fabric.sdk.android.Fabric;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -34,29 +30,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    private ActivityMapsBinding binding;
+
     @Inject
     CarWashProvider carWashProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.activity_maps);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_maps);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
 
         startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);
+
         initViews();
     }
 
     private void initViews() {
-        bottomSheet = findViewById(R.id.bottom_sheet);
+        bottomSheet = binding.bottomSheet;
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(getResources().getInteger(R.integer.min_height_bottom_map));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
     }
 
     @Override
