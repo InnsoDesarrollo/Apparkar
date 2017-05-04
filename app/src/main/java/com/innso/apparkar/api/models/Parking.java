@@ -1,14 +1,21 @@
 package com.innso.apparkar.api.models;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Parking {
 
+    @SerializedName("name")
     private String name;
 
-    private double latitud;
+    @SerializedName("latitude")
+    private double latitude;
 
-    private double longitud;
+    @SerializedName("longitude")
+    private double longitude;
 
+    @SerializedName("free")
+    private boolean free;
 
     public String getName() {
         return name;
@@ -19,18 +26,22 @@ public class Parking {
     }
 
     public double getLatitud() {
-        return latitud;
+        return latitude;
     }
 
     public void setLatitud(double latitud) {
-        this.latitud = latitud;
+        this.latitude = latitud;
     }
 
     public double getLongitud() {
-        return longitud;
+        return longitude;
     }
 
     public void setLongitud(double longitud) {
-        this.longitud = longitud;
+        this.longitude = longitud;
+    }
+
+    public Boolean isFree() {
+        return free;
     }
 }
