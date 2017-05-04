@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+# Add this global rule
+-keepattributes Signature
+
+-keepclassmembers class com.yourcompany.models.** {
+  *;
+}

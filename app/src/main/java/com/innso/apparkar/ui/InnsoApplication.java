@@ -14,9 +14,12 @@ public class InnsoApplication extends Application {
 
     public AppComponent appComponent;
 
+    private static InnsoApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         updateDagger();
         Fabric.with(this, new Crashlytics());
     }
@@ -28,4 +31,11 @@ public class InnsoApplication extends Application {
                 .build();
     }
 
+    public static InnsoApplication get() {
+        return instance;
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
+    }
 }

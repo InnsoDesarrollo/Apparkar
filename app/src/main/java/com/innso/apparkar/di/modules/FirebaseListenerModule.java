@@ -1,8 +1,11 @@
 package com.innso.apparkar.di.modules;
 
 
+import android.content.Context;
+
+import com.google.firebase.database.FirebaseDatabase;
 import com.innso.apparkar.provider.CarWashProvider;
-import com.innso.apparkar.provider.ParkingsProvider;
+import com.innso.apparkar.provider.ParkingProvider;
 
 import javax.inject.Singleton;
 
@@ -14,8 +17,8 @@ public class FirebaseListenerModule {
 
     @Provides
     @Singleton
-    ParkingsProvider parkingsProvider() {
-        return new ParkingsProvider();
+    ParkingProvider parkingProvider(Context context, FirebaseDatabase firebaseDatabase) {
+        return new ParkingProvider(context, firebaseDatabase);
     }
 
     @Provides
