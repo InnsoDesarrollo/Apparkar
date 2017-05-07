@@ -64,7 +64,7 @@
             android:contentDescription="@string/app_name"
             android:layout_weight="1"
             android:padding="@dimen/spacing_xlarge"
-            android:src="@mipmap/ic_parking" />
+            android:src="@mipmap/img_parking" />
 
         <ImageView
             android:id="@+id/imageView_parking_free"
@@ -73,7 +73,7 @@
             android:layout_weight="1"
             android:padding="@dimen/spacing_xlarge"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_petrol_pump" />
+            android:src="@mipmap/img_petrol_pump" />
 
         <ImageView
             android:id="@+id/imageView_wash_car"
@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:padding="@dimen/spacing_xlarge"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_other_service" />
+            android:src="@mipmap/img_other_service" />
 
     </LinearLayout>
 
