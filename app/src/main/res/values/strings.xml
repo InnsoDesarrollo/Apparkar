@@ -1,6 +1,9 @@
 <resources>
 
-
     <string name="copy.navigate">Navegar</string>
     <string name="copy.add_comment">Comentar</string>
+    <string name="copy.settings">Configuración</string>
+    <string name="copy.others">Otros</string>
+    <string name="copy.petrol_station">Combustible</string>
+    <string name="copy.local_parking">Parqueaderos</string>
 </resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1080333342611",
+    "firebase_url": "https://innso-apparkar.firebaseio.com",
+    "project_id": "innso-apparkar",
+    "storage_bucket": "innso-apparkar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080333342611:android:ad5a5bf018a457db",
+        "android_client_info": {
+          "package_name": "com.innso.apparkar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080333342611-vk6n1p0j80mvsmmlesd64sa7453komt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9JN2QBjPrp5EJs0mP_-F5SRrAzZPz5JI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
