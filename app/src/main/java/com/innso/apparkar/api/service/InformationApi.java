@@ -8,10 +8,9 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
-
 public interface InformationApi {
 
-    @GET("Parkings.json")
+    @GET("parking_lots.json")
     Observable<List<Parking>> getParkingData();
 
 }

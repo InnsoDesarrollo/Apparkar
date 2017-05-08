@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="parking"
+            type="com.innso.apparkar.ui.viewModels.ParkingViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView_background_parking"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_city_splash" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imageView_place_icon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignBottom="@+id/textView_place_address"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:src="@{parking.hasCost ? @drawable/ic_parking : @drawable/ic_parking_free}" />
+
+        <TextView
+            android:id="@+id/textView_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView_background_parking"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_toEndOf="@id/imageView_place_icon"
+            android:text="@{parking.name}"
+            android:textStyle="bold"
+            tools:text="Parking Name" />
+
+        <TextView
+            android:id="@+id/textView_place_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView_place_name"
+            android:layout_below="@id/textView_place_name"
+            android:text="@{parking.address}"
+            android:textSize="@dimen/font_small"
+            tools:text="Parking Address" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_information"
+            android:layout_alignStart="@+id/imageView_place_icon"
+            android:layout_below="@id/textView_place_address"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_toStartOf="@+id/layout_actions">
+
+
+            <ImageView
+                android:id="@+id/imageView_icon_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_values_title"
+                android:src="@drawable/ic_time" />
+
+            <TextView
+                android:id="@+id/textView_values_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageView_icon_time"
+                android:paddingBottom="@dimen/spacing_small"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:chargeFor="@{parking.costDescription}"
+                tools:text="Cobro por: minuto" />
+
+            <TextView
+                android:id="@+id/imageView_value_car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView_icon_time"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_toEndOf="@+id/imageView_icon_time"
+                android:drawableStart="@drawable/ic_car"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:parkingCount="@{parking.cartCost}"
+                tools:text=":97" />
+
+            <TextView
+                android:id="@+id/imageView_value_motorbike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView_icon_time"
+                android:layout_toEndOf="@+id/imageView_value_car"
+                android:drawableStart="@drawable/ic_motorbike"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:parkingCount="@{parking.motorbikeCost}"
+                tools:text=":30" />
+
+            <TextView
+                android:id="@+id/imageView_value_bike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView_icon_time"
+                android:layout_toEndOf="@+id/imageView_value_motorbike"
+                android:drawableStart="@drawable/ic_bike"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:parkingCount="@{parking.bikeCost}"
+                tools:text=":10" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/imageView_background_parking"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_add_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_new_comment"
+                android:text="@string/copy.add_comment"
+                android:textSize="@dimen/font_small" />
+
+
+            <TextView
+                android:id="@+id/textView_place_navigator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/font_small"
+                android:drawableTop="@drawable/ic_navigate"
+                android:text="@string/copy.navigate"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/layout_actions"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@color/second_blue"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_small">
+
+            <TextView
+                android:id="@+id/textView_place_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_like"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_small"
+                app:parkingCount="@{parking.countLikes}"
+                tools:text=":100" />
+
+            <TextView
+                android:id="@+id/textView_place_dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_dislike"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_small"
+                app:parkingCount="@{parking.countDislikes}"
+                tools:text=":100" />
+
+            <TextView
+                android:id="@+id/textView_place_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_comment"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_small"
+                app:parkingCount="@{parking.countComments}"
+                tools:text=":100" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_medium"
+                android:src="@drawable/ic_favorite"
+                android:tint="@color/colorAccent" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>

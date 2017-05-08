@@ -6,16 +6,19 @@ import com.google.gson.annotations.SerializedName;
 public class Parking {
 
     @SerializedName("name")
-    private String name;
+    String name;
 
-    @SerializedName("latitude")
-    private double latitude;
+    @SerializedName("reference_point")
+    ReferencePoint referencePoint;
 
-    @SerializedName("longitude")
-    private double longitude;
+    @SerializedName("prices")
+    ParkingPrice prices;
 
-    @SerializedName("free")
-    private boolean free;
+    @SerializedName("like")
+    int countLikes = 0;
+
+    @SerializedName("dislike")
+    int countDislikes = 0;
 
     public String getName() {
         return name;
@@ -25,23 +28,23 @@ public class Parking {
         this.name = name;
     }
 
-    public double getLatitud() {
-        return latitude;
+    public ReferencePoint getReferencePoint() {
+        return referencePoint;
     }
 
-    public void setLatitud(double latitud) {
-        this.latitude = latitud;
+    public ParkingPrice getPrices() {
+        return prices;
     }
 
-    public double getLongitud() {
-        return longitude;
+    public int getCountLikes() {
+        return countLikes;
     }
 
-    public void setLongitud(double longitud) {
-        this.longitude = longitud;
+    public int getCountDislikes() {
+        return countDislikes;
     }
 
-    public Boolean isFree() {
-        return free;
+    public boolean hasCost() {
+        return prices != null;
     }
 }
