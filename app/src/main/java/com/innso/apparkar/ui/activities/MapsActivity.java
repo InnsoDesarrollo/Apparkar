@@ -113,6 +113,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(4.6097100, -74.0817500)));
 
+        mMap.getUiSettings().setRotateGesturesEnabled(false);
+
         mMap.setOnCameraMoveListener(() -> {
             if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
