@@ -27,7 +27,7 @@
             android:layout_height="55dp"
             android:layout_alignBottom="@+id/textView_place_address"
             android:layout_marginStart="@dimen/spacing_medium"
-            android:src="@{parking.hasCost ? @drawable/ic_parking : @drawable/ic_parking_free}" />
+            android:src="@{parking.hasCost ? @drawable/ic_map_parking : @drawable/ic_map_parking_free}" />
 
         <TextView
             android:id="@+id/textView_place_name"
