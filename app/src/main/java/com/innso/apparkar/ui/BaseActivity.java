@@ -1,6 +1,5 @@
 package com.innso.apparkar.ui;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
@@ -16,7 +15,7 @@ public class BaseActivity extends FragmentActivity {
                 .build();
     }
 
-    protected void replaceFragment(Fragment fragment) {
+    protected void replaceFragment(BaseFragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();

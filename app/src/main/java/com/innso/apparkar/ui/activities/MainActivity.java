@@ -27,9 +27,10 @@ import com.innso.apparkar.api.controller.InformationController;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ReferencePoint;
 import com.innso.apparkar.databinding.ActivityMapsBinding;
-import com.innso.apparkar.provider.ParkingProvider;
 import com.innso.apparkar.ui.BaseActivity;
-import com.innso.apparkar.ui.fragments.PlacesListFragment;
+import com.innso.apparkar.ui.fragments.BasePlacesFragment;
+import com.innso.apparkar.ui.fragments.ParkingListFragment;
+import com.innso.apparkar.ui.fragments.PetrolStationsListFragment;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 import com.innso.apparkar.util.BitmapUtils;
 
@@ -37,7 +38,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MapsActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemReselectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private final int REQUEST_SPLASH = 0;
 
@@ -49,14 +50,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     private ActivityMapsBinding binding;
 
-    private PlacesListFragment placesListFragment;
+    private BasePlacesFragment parkingListFragment;
+
+    private BasePlacesFragment petrolStationsListFragment;
 
     private GoogleApiClient googleApiClient;
 
     protected Location currentLocation;
-
-    @Inject
-    ParkingProvider parkingProvider;
 
     @Inject
     InformationController informationController;
@@ -90,8 +90,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
         informationController.getParkingSlots().subscribe(this::updateParkingSlots);
-        placesListFragment = new PlacesListFragment();
-        replaceFragment(placesListFragment);
+        initFragments();
+    }
+
+    private void initFragments() {
+        parkingListFragment = new ParkingListFragment();
+        petrolStationsListFragment = new PetrolStationsListFragment();
+        replaceFragment(parkingListFragment);
     }
 
     private void initLocation() {
@@ -105,7 +110,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
     }
 
     private void addListeners() {
-        binding.bottomNavigation.setOnNavigationItemReselectedListener(this);
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(this);
         binding.buttonLocation.setOnClickListener(this);
     }
 
@@ -138,7 +143,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
     }
 
     @Override
-    public void onNavigationItemReselected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int currentState = bottomSheetBehavior.getState();
         if (currentState == BottomSheetBehavior.STATE_COLLAPSED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -146,16 +151,16 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
         } else {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
+        return true;
     }
 
     private void addFragment(int id) {
         switch (id) {
             case R.id.action_map:
-                if (placesListFragment == null) {
-                    placesListFragment = new PlacesListFragment();
-                }
-                replaceFragment(placesListFragment);
+                replaceFragment(parkingListFragment);
                 break;
+            case R.id.action_petrol_station:
+                replaceFragment(petrolStationsListFragment);
         }
     }
 
@@ -214,4 +219,5 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
     public void onClick(View v) {
         updateLocation();
     }
+
 }

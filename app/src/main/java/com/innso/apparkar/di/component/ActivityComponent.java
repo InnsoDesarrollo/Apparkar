@@ -1,7 +1,7 @@
 package com.innso.apparkar.di.component;
 
 import com.innso.apparkar.di.scope.ActivityScope;
-import com.innso.apparkar.ui.activities.MapsActivity;
+import com.innso.apparkar.ui.activities.MainActivity;
 
 import dagger.Component;
 
@@ -9,6 +9,6 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class)
 public interface ActivityComponent extends AppComponent {
 
-    void inject(MapsActivity baseActivity);
+    void inject(MainActivity baseActivity);
 
 }

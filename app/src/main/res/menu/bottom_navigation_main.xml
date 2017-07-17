@@ -9,7 +9,7 @@
         app:showAsAction="withText" />
 
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_petrol_station"
         android:enabled="true"
         android:icon="@drawable/ic_local_gas"
         android:title="@string/copy.petrol_station"

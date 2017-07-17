@@ -2,6 +2,7 @@ package com.innso.apparkar.ui.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -19,32 +20,39 @@ import com.innso.apparkar.ui.interfaces.GenericItemView;
 import com.innso.apparkar.ui.items.ParkingItem;
 import com.innso.apparkar.ui.viewModels.ParkingViewModel;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class PlacesListFragment extends BaseFragment {
+import static com.innso.apparkar.ui.fragments.BasePlacesFragment.PARKING_LIST;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
-    private FragmentPlacesListBinding binding;
+public class BasePlacesFragment extends BaseFragment {
 
-    private GenericAdapter adaper;
+    public static final int PARKING_LIST = 0;
+    public static final int PETROL_STATION_LIST = 1;
 
-    @Inject
-    InformationController informationController;
+    protected FragmentPlacesListBinding binding;
+
+    protected GenericAdapter adapter;
+
+    public static BasePlacesFragment newInstance(@fragmentType int fragmentType){
+        BasePlacesFragment newFragment;
+        if(fragmentType == PARKING_LIST ){
+            newFragment = new ParkingListFragment();
+        } else {
+            newFragment = new PetrolStationsListFragment();
+        }
+        return newFragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_places_list, container, false);
-        getComponent().inject(this);
         initViews();
         return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        informationController.getParkingSlots().subscribe(this::updateParkingSlots);
     }
 
     private void initViews() {
@@ -53,7 +61,7 @@ public class PlacesListFragment extends BaseFragment {
 
     private void setUpRecyclerView() {
 
-        adaper = new GenericAdapter(new GenericAdapterFactory() {
+        adapter = new GenericAdapter(new GenericAdapterFactory() {
             @Override
             public GenericItemView onCreateViewHolder(ViewGroup parent, int viewType) {
                 return new ParkingItem(parent.getContext());
@@ -62,12 +70,10 @@ public class PlacesListFragment extends BaseFragment {
 
         binding.recyclerPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.recyclerPlaces.setAdapter(adaper);
+        binding.recyclerPlaces.setAdapter(adapter);
     }
 
-    private void updateParkingSlots(List<Parking> parkingSlots) {
-        for (int i = 0; i < parkingSlots.size(); i++) {
-            adaper.addItem(new ParkingViewModel(parkingSlots.get(i)));
-        }
-    }
+    @Retention(SOURCE)
+    @IntDef({PARKING_LIST, PETROL_STATION_LIST})
+    public @interface fragmentType{}
 }
