@@ -2,6 +2,7 @@ package com.innso.apparkar.ui.activities;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -10,11 +11,15 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
@@ -32,7 +37,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MapsActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemReselectedListener {
+public class MapsActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemReselectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private final int REQUEST_SPLASH = 0;
 
@@ -45,6 +50,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
     private ActivityMapsBinding binding;
 
     private PlacesListFragment placesListFragment;
+
+    private GoogleApiClient googleApiClient;
+
+    protected Location currentLocation;
 
     @Inject
     ParkingProvider parkingProvider;
@@ -69,6 +78,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
         initViews();
 
+        initLocation();
+
         addListeners();
     }
 
@@ -79,10 +90,51 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
         informationController.getParkingSlots().subscribe(this::updateParkingSlots);
+        placesListFragment = new PlacesListFragment();
+        replaceFragment(placesListFragment);
+    }
+
+    private void initLocation() {
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
 
     private void addListeners() {
         binding.bottomNavigation.setOnNavigationItemReselectedListener(this);
+        binding.buttonLocation.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        updateLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     @Override
@@ -120,6 +172,21 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+
+        updateLocation();
+    }
+
+
+    private void updateLocation() {
+
+        if (currentLocation != null && mMap != null) {
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                    .zoom(15)
+                    .bearing(0)
+                    .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
     }
 
     private void updateParkingSlots(List<Parking> parkingSlots) {
@@ -131,7 +198,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
     }
 
     private void drawParking(Parking parking) {
-        int marketIcon = parking.hasCost() ? R.drawable.ic_parking : R.drawable.ic_parking_free;
+        int marketIcon = parking.hasCost() ? R.drawable.ic_map_parking : R.drawable.ic_map_parking_free;
         addMarket(parking.getName(), parking.getReferencePoint(), marketIcon);
     }
 
@@ -141,5 +208,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Bo
                 .position(referencePoint.getPosition())
                 .title(name)
                 .icon(bitmap));
+    }
+
+    @Override
+    public void onClick(View v) {
+        updateLocation();
     }
 }
