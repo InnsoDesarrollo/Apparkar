@@ -24,4 +24,8 @@ public class ApiConfig {
         return context.getString(R.string.url_firebase);
     }
 
+    public String getServiceMapsUrl() {
+        return context.getString(R.string.url_service_maps);
+    }
+
 }

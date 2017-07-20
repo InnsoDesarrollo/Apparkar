@@ -1,12 +1,11 @@
 package com.innso.apparkar.di.modules;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.innso.apparkar.api.config.ApiConfig;
 import com.innso.apparkar.api.config.TokenAuthenticator;
 import com.innso.apparkar.api.service.InformationApi;
+import com.innso.apparkar.api.service.MapsApi;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +33,12 @@ public class ApiModule {
 
     @Provides
     @Singleton
+    public MapsApi mapsApi(@Named("maps") Retrofit retrofit) {
+        return retrofit.create(MapsApi.class);
+    }
+
+    @Provides
+    @Singleton
     public Gson gson() {
         return new GsonBuilder()
                 .create();
@@ -52,12 +57,23 @@ public class ApiModule {
 
     @Provides
     @Singleton
+    @Named("maps")
+    public Retrofit retrofitServiceMaps(ApiConfig apiConfig, Gson gson, TokenAuthenticator authenticator) {
+
+        OkHttpClient.Builder httpClient = getHttpClientBuilder(apiConfig)
+                .authenticator(authenticator);
+
+        return getRetrofitBuilder(httpClient.build(), apiConfig.getServiceMapsUrl(), gson).build();
+    }
+
+    @Provides
+    @Singleton
     public Retrofit retrofit(ApiConfig apiConfig, Gson gson, TokenAuthenticator authenticator) {
 
         OkHttpClient.Builder httpClient = getHttpClientBuilder(apiConfig)
                 .authenticator(authenticator);
 
-        return getRetrofitBuilder(httpClient.build(), "andrespae9z0.com", gson).build();
+        return getRetrofitBuilder(httpClient.build(), "andrespaez90.com", gson).build();
     }
 
     private OkHttpClient.Builder getHttpClientBuilder(ApiConfig apiConfig) {
