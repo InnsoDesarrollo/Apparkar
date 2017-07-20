@@ -38,7 +38,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private final int REQUEST_SPLASH = 0;
 
@@ -57,6 +58,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     private GoogleApiClient googleApiClient;
 
     protected Location currentLocation;
+
+    private int currentOpenItem = 0;
 
     @Inject
     InformationController informationController;
@@ -112,6 +115,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     private void addListeners() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this);
         binding.buttonLocation.setOnClickListener(this);
+        binding.buttonAddLocation.setOnClickListener(this);
     }
 
     @Override
@@ -146,10 +150,15 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int currentState = bottomSheetBehavior.getState();
         if (currentState == BottomSheetBehavior.STATE_COLLAPSED) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             addFragment(item.getItemId());
-        } else {
+            binding.buttonAddLocation.setVisibility(View.VISIBLE);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else if (item.getItemId() == currentOpenItem) {
+            binding.buttonAddLocation.setVisibility(View.INVISIBLE);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            currentOpenItem = item.getItemId();
+            addFragment(item.getItemId());
         }
         return true;
     }
@@ -217,7 +226,14 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     @Override
     public void onClick(View v) {
-        updateLocation();
+        int viewId = v.getId();
+        switch (viewId) {
+            case R.id.button_location:
+                updateLocation();
+                break;
+            case R.id.button_add_location:
+                startActivity(new Intent(this, RegisterLocationActivity.class));
+        }
     }
 
 }

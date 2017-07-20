@@ -35,7 +35,7 @@ public class PetrolStationsListFragment extends BasePlacesFragment {
 
     private void updateParkingSlots(List<Parking> parkingSlots) {
         for (int i = 0; i < parkingSlots.size(); i++) {
-            adapter.addItem(new ParkingViewModel(parkingSlots.get(i)));
+            //adapter.addItem(new ParkingViewModel(parkingSlots.get(i)));
         }
     }
 }
