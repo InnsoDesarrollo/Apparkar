@@ -9,8 +9,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,11 +68,21 @@
             android:id="@+id/button_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_medium"
             android:src="@drawable/ic_location"
             app:elevation="4dp"
+            app:fabSize="mini"
             app:layout_anchor="@+id/bottom_sheet"
             app:layout_anchorGravity="center|top" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_add_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/spacing_large"
+            android:src="@drawable/ic_add"
+            android:visibility="invisible"
+            app:elevation="4dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 

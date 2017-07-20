@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_medium">
+
+        <EditText
+            android:id="@+id/editText_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dirección: " />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_above="@+id/view_center_parent"
+            android:layout_below="@+id/editText_address"
+            tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
+
+        <View
+            android:id="@+id/view_center_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_center_parent"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_parking"
+                android:layout_width="@dimen/size_signal"
+                android:layout_height="@dimen/size_signal"
+                android:layout_margin="@dimen/spacing_large"
+                android:background="@drawable/bg_default_blue_signal"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/spacing_large"
+                app:srcCompat="@drawable/ic_local_parking" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_parking_free"
+                android:layout_width="@dimen/size_signal"
+                android:layout_height="@dimen/size_signal"
+                android:layout_margin="@dimen/spacing_large"
+                android:background="@drawable/bg_default_green_signal"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/spacing_large"
+                app:srcCompat="@drawable/ic_local_gas" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_wash_car"
+                android:layout_width="@dimen/size_signal"
+                android:layout_height="@dimen/size_signal"
+                android:layout_margin="@dimen/spacing_large"
+                android:background="@drawable/bg_default_yellow_signal"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/spacing_xlarge"
+                app:srcCompat="@drawable/ic_car_wash" />
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Siguiente" />
+
+    </RelativeLayout>
+
+</layout>

@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/second_blue">
@@ -9,10 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="@dimen/spacing_xxlarge"
         android:text="@string/copy_loading_parkings"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
 
     <ImageView
         android:id="@+id/imageView_city"
@@ -39,50 +39,53 @@
     <ImageView
         android:id="@+id/imageView_ic_car"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/size_signal"
         android:layout_alignBottom="@+id/imageView_city"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-35dp"
-        android:transitionName="logo"
         android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_app" />
+        android:src="@mipmap/ic_app"
+        android:transitionName="logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView_city"
         android:gravity="center"
-        android:layout_above="@+id/textView_loading"
-        android:layout_below="@+id/imageView_ic_car"
-        android:padding="@dimen/spacing_medium"
-        android:weightSum="3">
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_medium">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView_parking"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/size_signal"
+            android:layout_height="@dimen/size_signal"
+            android:layout_margin="@dimen/spacing_large"
+            android:background="@drawable/bg_default_blue_signal"
             android:contentDescription="@string/app_name"
-            android:layout_weight="1"
-            android:padding="@dimen/spacing_xlarge"
-            android:src="@mipmap/img_parking" />
+            android:padding="@dimen/spacing_large"
+            app:srcCompat="@drawable/ic_local_parking" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView_parking_free"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/spacing_xlarge"
+            android:layout_width="@dimen/size_signal"
+            android:layout_height="@dimen/size_signal"
+            android:layout_margin="@dimen/spacing_large"
+            android:background="@drawable/bg_default_green_signal"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/img_petrol_pump" />
+            android:padding="@dimen/spacing_large"
+            app:srcCompat="@drawable/ic_local_gas" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView_wash_car"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/spacing_xlarge"
+            android:layout_width="@dimen/size_signal"
+            android:layout_height="@dimen/size_signal"
+            android:layout_margin="@dimen/spacing_large"
+            android:background="@drawable/bg_default_yellow_signal"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/img_other_service" />
+            android:padding="@dimen/spacing_xlarge"
+            app:srcCompat="@drawable/ic_car_wash" />
 
     </LinearLayout>
 
