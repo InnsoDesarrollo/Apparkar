@@ -19,9 +19,9 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/spacing_medium"
             android:layout_above="@+id/view_center_parent"
             android:layout_below="@+id/editText_address"
+            android:layout_marginTop="@dimen/spacing_medium"
             tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
 
         <View

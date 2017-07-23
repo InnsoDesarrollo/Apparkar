@@ -18,7 +18,7 @@ public class MapsController {
         this.mapsApi = mapsApi;
     }
 
-    public Observable<String> getParkingSlots(double lat, double lgn) {
+    public Observable<String> getAddressDescription(double lat, double lgn) {
         String latLognFormat = lat + "," + lgn;
         return mapsApi.getAddress(latLognFormat)
                 .subscribeOn(Schedulers.io())

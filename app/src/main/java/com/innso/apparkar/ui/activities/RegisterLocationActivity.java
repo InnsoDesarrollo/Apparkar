@@ -1,9 +1,9 @@
 package com.innso.apparkar.ui.activities;
 
+import android.databinding.DataBindingUtil;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -16,8 +16,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.innso.apparkar.R;
+import com.innso.apparkar.api.controller.MapsController;
+import com.innso.apparkar.databinding.ActivityRegisterLocationBinding;
+import com.innso.apparkar.ui.BaseActivity;
 
-public class RegisterLocationActivity extends AppCompatActivity implements OnMapReadyCallback,
+import javax.inject.Inject;
+
+public class RegisterLocationActivity extends BaseActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
@@ -26,6 +31,10 @@ public class RegisterLocationActivity extends AppCompatActivity implements OnMap
 
     protected Location currentLocation;
 
+    ActivityRegisterLocationBinding binding;
+    @Inject
+    MapsController mapsController;
+
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -33,10 +42,11 @@ public class RegisterLocationActivity extends AppCompatActivity implements OnMap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_location);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register_location);
+        getComponent().inject(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        initLocation();
     }
 
     private void initLocation() {
@@ -73,6 +83,8 @@ public class RegisterLocationActivity extends AppCompatActivity implements OnMap
     @Override
     public void onConnected(Bundle connectionHint) {
         currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        mapsController.getAddressDescription(currentLocation.getLatitude(), currentLocation.getLongitude())
+                .subscribe(address -> binding.editTextAddress.setText(address));
         updateLocation();
     }
 
