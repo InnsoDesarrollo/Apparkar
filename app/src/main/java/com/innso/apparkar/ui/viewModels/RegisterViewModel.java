@@ -8,9 +8,17 @@ import com.innso.apparkar.api.models.Parking;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+
 public class RegisterViewModel extends ParentViewModel {
 
     private final int TYPE_PARKING = 1;
+
+    private BehaviorSubject<Boolean> showParkingInformation = BehaviorSubject.createDefault(false);
+    private BehaviorSubject<Boolean> showPetrolStationInformation = BehaviorSubject.createDefault(false);
 
     public ParkingViewModel parkingViewModel;
 
@@ -31,6 +39,7 @@ public class RegisterViewModel extends ParentViewModel {
         switch (viewId) {
             case R.id.imageView_parking:
                 locationType = TYPE_PARKING;
+                showParkingInformation.onNext(!showParkingInformation.getValue());
                 break;
         }
     }
@@ -48,4 +57,10 @@ public class RegisterViewModel extends ParentViewModel {
     private void createNewParking() {
         informationController.addParkingSlot(new Parking());
     }
+
+
+    public Observable<Boolean> showParkingInformation() {
+        return showParkingInformation.subscribeOn(AndroidSchedulers.mainThread());
+    }
+
 }

@@ -1,10 +1,11 @@
 package com.innso.apparkar.ui;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,9 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class BaseActivity extends AppCompatActivity {
+
+
+    protected ProgressDialog progressDialog;
 
     protected ActivityComponent getComponent() {
         return DaggerActivityComponent.builder()
@@ -55,6 +59,36 @@ public class BaseActivity extends AppCompatActivity {
                 })
                 .setCancelable(false)
                 .show();
+    }
+
+    private void initProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+        }
+    }
+
+    public void showProgressDialog(@StringRes int message) {
+        if (message != 0) {
+            initProgressDialog();
+            progressDialog.setMessage(getString(message));
+            try {
+                progressDialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void showProgressDialog(String message) {
+        initProgressDialog();
+        progressDialog.setMessage(message);
+        try {
+            progressDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void replaceFragment(BaseFragment fragment) {

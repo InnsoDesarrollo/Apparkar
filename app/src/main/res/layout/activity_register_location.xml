@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.innso.apparkar.ui.viewModels.RegisterViewModel"/>
+            type="com.innso.apparkar.ui.viewModels.RegisterViewModel" />
     </data>
 
     <android.support.percent.PercentRelativeLayout
@@ -21,17 +21,19 @@
             android:id="@+id/editText_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:hint="Dirección: "
             android:padding="@dimen/spacing_medium" />
 
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/fragment_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/editText_address"
+            android:layout_marginTop="@dimen/spacing_medium"
             app:layout_heightPercent="50%"
             tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
 
@@ -39,7 +41,7 @@
             android:id="@+id/layout_location_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/map"
+            android:layout_below="@+id/fragment_map"
             android:layout_marginTop="@dimen/spacing_medium"
             android:gravity="center">
 
@@ -50,11 +52,12 @@
                 android:layout_margin="@dimen/spacing_large"
                 android:background="@drawable/bg_default_blue_signal"
                 android:contentDescription="@string/app_name"
+                android:onClick="@{viewModel::onSelectLocationPlace}"
                 android:padding="@dimen/spacing_large"
                 app:srcCompat="@drawable/ic_local_parking" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_parking_free"
+                android:id="@+id/imageView_petrol_station"
                 android:layout_width="@dimen/size_signal"
                 android:layout_height="@dimen/size_signal"
                 android:layout_margin="@dimen/spacing_large"
@@ -76,6 +79,7 @@
         </LinearLayout>
 
         <include
+            android:id="@+id/layout_parking_information"
             layout="@layout/view_parking_values"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

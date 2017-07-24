@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,6 +23,7 @@ import com.innso.apparkar.api.controller.MapsController;
 import com.innso.apparkar.databinding.ActivityRegisterLocationBinding;
 import com.innso.apparkar.ui.BaseActivity;
 import com.innso.apparkar.ui.adapters.listeners.OnMarkerDragListenerAdapter;
+import com.innso.apparkar.ui.viewModels.RegisterViewModel;
 
 import javax.inject.Inject;
 
@@ -32,7 +34,11 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     private GoogleMap mMap;
 
-    protected Location currentLocation;
+    private Location currentLocation;
+
+    private RegisterViewModel registerViewModel;
+
+    private SupportMapFragment mapFragment;
 
     ActivityRegisterLocationBinding binding;
 
@@ -48,9 +54,15 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register_location);
         getComponent().inject(this);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        initView();
         requestLocationPermissions();
+    }
+
+    private void initView() {
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
+        mapFragment.getMapAsync(this);
+        registerViewModel = new RegisterViewModel();
+        binding.setViewModel(registerViewModel);
     }
 
     @Override
@@ -61,6 +73,45 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        subscribe();
+    }
+
+    @Override
+    protected void onStart() {
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    private void subscribe() {
+        registerViewModel.showParkingInformation().subscribe(this::showParkingInformation);
+    }
+
+
+    private void showParkingInformation(boolean show) {
+        if (show) {
+            binding.layoutParkingInformation.getRoot().setVisibility(View.VISIBLE);
+            getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+            binding.imageViewWashCar.setVisibility(View.GONE);
+            binding.imageViewPetrolStation.setVisibility(View.GONE);
+            binding.layoutParkingInformation.editTextParkingName.requestFocus();
+        } else {
+            binding.layoutParkingInformation.getRoot().setVisibility(View.GONE);
+            getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+            binding.imageViewWashCar.setVisibility(View.VISIBLE);
+            binding.imageViewPetrolStation.setVisibility(View.VISIBLE);
+            binding.editTextAddress.requestFocus();
         }
     }
 

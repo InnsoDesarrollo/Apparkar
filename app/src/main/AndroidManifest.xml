@@ -23,17 +23,20 @@
         <activity
             android:name=".ui.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".ui.activities.MainActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:label="@string/app_name" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".ui.activities.RegisterLocationActivity"></activity>
+
+        <activity android:name=".ui.activities.MainActivity" android:windowSoftInputMode="adjustNothing"/>
+
+        <activity android:name=".ui.activities.RegisterLocationActivity"/>
+
     </application>
 
 </manifest>

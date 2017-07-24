@@ -41,8 +41,6 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
-    private final int REQUEST_SPLASH = 0;
-
     private BottomSheetBehavior bottomSheetBehavior;
 
     private View bottomSheet;
@@ -77,11 +75,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
         mapFragment.getMapAsync(this);
 
-        startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);
-
         initViews();
 
-        initLocation();
+        requestLocationPermissions();
 
         addListeners();
     }
@@ -100,6 +96,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         parkingListFragment = new ParkingListFragment();
         petrolStationsListFragment = new PetrolStationsListFragment();
         replaceFragment(parkingListFragment);
+    }
+
+    @Override
+    protected void successLocationPermission() {
+        super.successLocationPermission();
+        initLocation();
     }
 
     private void initLocation() {
@@ -177,7 +179,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(4.6097100, -74.0817500)));
+        CameraPosition cameraPosition = getCameraPosition(4.6097100, -74.0817500);
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         mMap.getUiSettings().setRotateGesturesEnabled(false);
 
@@ -190,14 +194,18 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         updateLocation();
     }
 
-    private void updateLocation() {
 
+    private CameraPosition getCameraPosition(double lat, double lgn) {
+        return new CameraPosition.Builder()
+                .target(new LatLng(lat, lgn))
+                .zoom(15)
+                .bearing(0)
+                .build();
+    }
+
+    private void updateLocation() {
         if (currentLocation != null && mMap != null) {
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
-                    .zoom(15)
-                    .bearing(0)
-                    .build();
+            CameraPosition cameraPosition = getCameraPosition(currentLocation.getLatitude(), currentLocation.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
     }

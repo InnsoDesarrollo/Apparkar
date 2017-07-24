@@ -6,22 +6,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_medium">
+        android:layout_marginLeft="@dimen/spacing_xxlarge"
+        android:layout_marginRight="@dimen/spacing_xxlarge"
+        android:layout_marginTop="@dimen/spacing_medium">
+
+        <EditText
+            android:id="@+id/editText_parking_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_xlarge"
+            android:layout_marginRight="@dimen/spacing_xlarge"
+            android:gravity="center"
+            android:hint="Nombre del parqueadero" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView_icon_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editText_parking_name"
+            android:layout_alignStart="@+id/editText_parking_name"
+            android:layout_below="@+id/editText_parking_name"
+            android:layout_marginTop="@dimen/spacing_medium"
             app:srcCompat="@drawable/ic_time" />
 
         <Spinner
             android:id="@+id/textView_values_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editText_parking_name"
+            android:layout_alignRight="@+id/editText_parking_name"
+            android:layout_below="@+id/editText_parking_name"
+            android:layout_marginLeft="@dimen/spacing_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:layout_toEndOf="@+id/imageView_icon_time"
             android:layout_toRightOf="@+id/imageView_icon_time"
-            android:layout_marginRight="@dimen/spacing_large"
-            android:layout_marginLeft="@dimen/spacing_large"
             android:textSize="@dimen/font_large"
             android:textStyle="bold"
             tools:text="Cobro por: minuto" />
@@ -37,8 +56,6 @@
                 android:id="@+id/imageView_value_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_medium"
-                android:layout_marginStart="@dimen/spacing_medium"
                 android:drawableLeft="@drawable/ic_car"
                 android:drawableStart="@drawable/ic_car"
                 android:gravity="center"

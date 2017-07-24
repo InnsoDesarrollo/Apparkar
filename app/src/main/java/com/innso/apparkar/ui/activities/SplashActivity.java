@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -32,13 +33,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash);
-
         init();
-
+        //TODO: Force update
         new Handler().postDelayed(timeSplash, 5000);
-
     }
 
     private void init() {
@@ -86,7 +84,7 @@ public class SplashActivity extends AppCompatActivity {
     public void notifyFinish() {
         if (animationEnd && loadDataEnd) {
             setResult(RESULT_OK);
-            finishAfterTransition();
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 }

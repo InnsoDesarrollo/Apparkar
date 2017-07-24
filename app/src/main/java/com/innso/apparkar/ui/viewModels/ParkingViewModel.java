@@ -9,12 +9,12 @@ public class ParkingViewModel extends BaseViewModel {
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> address = new ObservableField<>();
     public ObservableField<String> costDescription = new ObservableField<>();
-    public ObservableField<Integer> cartCost = new ObservableField<>();
-    public ObservableField<Integer> bikeCost = new ObservableField<>();
-    public ObservableField<Integer> motorbikeCost = new ObservableField<>();
-    public ObservableField<Integer> countLikes = new ObservableField<>();
-    public ObservableField<Integer> countDislikes = new ObservableField<>();
-    public ObservableField<Integer> countComments = new ObservableField<>();
+    public ObservableField<Integer> cartCost = new ObservableField<>(0);
+    public ObservableField<Integer> bikeCost = new ObservableField<>(0);
+    public ObservableField<Integer> motorbikeCost = new ObservableField<>(0);
+    public ObservableField<Integer> countLikes = new ObservableField<>(0);
+    public ObservableField<Integer> countDislikes = new ObservableField<>(0);
+    public ObservableField<Integer> countComments = new ObservableField<>(0);
 
     public ObservableField<Boolean> hasCost = new ObservableField<>();
 
