@@ -13,6 +13,7 @@ import com.innso.apparkar.di.modules.FirebaseListenerModule;
 import com.innso.apparkar.managers.preferences.PrefsManager;
 import com.innso.apparkar.provider.CarWashProvider;
 import com.innso.apparkar.provider.ParkingProvider;
+import com.innso.apparkar.provider.ResourceProvider;
 
 import javax.inject.Singleton;
 
@@ -24,6 +25,8 @@ import retrofit2.Retrofit;
 public interface AppComponent {
 
     PrefsManager preferenceManager();
+
+    ResourceProvider resourceProvider();
 
     FirebaseDatabase firebaseDatabase();
 

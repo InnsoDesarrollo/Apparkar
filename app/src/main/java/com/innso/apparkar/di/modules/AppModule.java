@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.innso.apparkar.api.config.ApiConfig;
 import com.innso.apparkar.api.config.TokenAuthenticator;
 import com.innso.apparkar.managers.preferences.PrefsManager;
+import com.innso.apparkar.provider.ResourceProvider;
 
 import javax.inject.Singleton;
 
@@ -27,6 +28,12 @@ public class AppModule {
     @Singleton
     public Context appContext() {
         return app;
+    }
+
+    @Provides
+    @Singleton
+    public ResourceProvider resourceProvider(Context context) {
+        return new ResourceProvider(context);
     }
 
     @Provides
