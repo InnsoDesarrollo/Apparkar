@@ -10,8 +10,15 @@ public class Result {
     @SerializedName("place_id")
     String placeId;
 
+    @SerializedName("geometry")
+    Geometry geometry;
+
     public String getFormattedAddress() {
         return formattedAddress;
+    }
+
+    public Geometry.MapsLocation getLocation() {
+        return geometry.getLocation();
     }
 
     public String getPlaceId() {

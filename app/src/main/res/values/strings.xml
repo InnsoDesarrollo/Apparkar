@@ -1,5 +1,12 @@
 <resources>
 
+    <string name="permission.message_permission_denied">Has denegado el permiso de %1$s, tienes que habilitarlo de manera manual para poder continuar.</string>
+    <string name="permission.title_permission_denied">Permiso denegado</string>
+    <string name="permission.enable">Habilitar</string>
+    <string name="permission.location">ubicación</string>
+
+    <string name="package_app">package:com.innso.apparkar</string>
+
     <string name="copy.navigate">Navegar</string>
     <string name="copy.add_comment">Comentar</string>
     <string name="copy.settings">Configuración</string>
