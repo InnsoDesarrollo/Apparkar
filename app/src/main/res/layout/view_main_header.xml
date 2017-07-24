@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-    </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_medium"
-        android:paddingRight="@dimen/spacing_medium">
+        android:paddingRight="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_small">
 
         <ImageView
             android:id="@+id/imageView_logo"
@@ -31,10 +27,12 @@
             android:layout_marginLeft="@dimen/spacing_medium"
             android:layout_marginRight="@dimen/spacing_medium"
             android:layout_toEndOf="@+id/imageView_logo"
+            android:layout_toLeftOf="@+id/imageView_search"
+            android:layout_toRightOf="@+id/imageView_logo"
             android:layout_toStartOf="@+id/imageView_search"
-            android:gravity="center"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:gravity="center"
             android:hint="Zona a buscar estacionamiento"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
@@ -43,6 +41,7 @@
             android:layout_width="@dimen/spacing_huge"
             android:layout_height="@dimen/spacing_huge"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
             android:src="@android:drawable/ic_search_category_default"

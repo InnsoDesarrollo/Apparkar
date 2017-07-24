@@ -26,6 +26,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_alignBottom="@+id/textView_place_address"
+            android:layout_marginLeft="@dimen/spacing_medium"
             android:layout_marginStart="@dimen/spacing_medium"
             android:src="@{parking.hasCost ? @drawable/ic_map_parking : @drawable/ic_map_parking_free}" />
 
@@ -34,9 +35,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageView_background_parking"
+            android:layout_marginLeft="@dimen/spacing_medium"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_toEndOf="@id/imageView_place_icon"
+            android:layout_toRightOf="@id/imageView_place_icon"
             android:text="@{parking.name}"
             android:textStyle="bold"
             tools:text="Parking Name" />
@@ -45,35 +48,37 @@
             android:id="@+id/textView_place_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView_place_name"
             android:layout_alignStart="@+id/textView_place_name"
             android:layout_below="@id/textView_place_name"
             android:text="@{parking.address}"
             android:textSize="@dimen/font_small"
             tools:text="Parking Address" />
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/layout_information"
+            android:layout_alignLeft="@+id/imageView_place_icon"
             android:layout_alignStart="@+id/imageView_place_icon"
             android:layout_below="@id/textView_place_address"
             android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_toLeftOf="@+id/layout_actions"
             android:layout_toStartOf="@+id/layout_actions">
 
-
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageView_icon_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_values_title"
-                android:src="@drawable/ic_time" />
+                app:srcCompat="@drawable/ic_time" />
 
             <TextView
                 android:id="@+id/textView_values_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imageView_icon_time"
+                android:layout_toRightOf="@+id/imageView_icon_time"
                 android:paddingBottom="@dimen/spacing_small"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
@@ -85,8 +90,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView_icon_time"
+                android:layout_marginLeft="@dimen/spacing_medium"
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_toEndOf="@+id/imageView_icon_time"
+                android:layout_toRightOf="@+id/imageView_icon_time"
+                android:drawableLeft="@drawable/ic_car"
                 android:drawableStart="@drawable/ic_car"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_medium"
@@ -102,6 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView_icon_time"
                 android:layout_toEndOf="@+id/imageView_value_car"
+                android:layout_toRightOf="@id/imageView_value_car"
+                android:drawableLeft="@drawable/ic_motorbike"
                 android:drawableStart="@drawable/ic_motorbike"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_medium"
@@ -117,6 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView_icon_time"
                 android:layout_toEndOf="@+id/imageView_value_motorbike"
+                android:layout_toRightOf="@id/imageView_value_motorbike"
+                android:drawableLeft="@drawable/ic_bike"
                 android:drawableStart="@drawable/ic_bike"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_medium"
@@ -134,8 +146,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/imageView_background_parking"
             android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:gravity="center"
             android:orientation="vertical">
@@ -165,6 +179,7 @@
             android:id="@+id/layout_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/layout_actions"
             android:layout_marginTop="@dimen/spacing_small"
@@ -178,9 +193,12 @@
                 android:id="@+id/textView_place_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_like"
                 android:drawableStart="@drawable/ic_like"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_small"
+                android:paddingLeft="@dimen/spacing_medium"
+                android:paddingRight="@dimen/spacing_small"
                 android:paddingStart="@dimen/spacing_medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_small"
@@ -191,9 +209,12 @@
                 android:id="@+id/textView_place_dislike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_dislike"
                 android:drawableStart="@drawable/ic_dislike"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_small"
+                android:paddingLeft="@dimen/spacing_medium"
+                android:paddingRight="@dimen/spacing_small"
                 android:paddingStart="@dimen/spacing_medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_small"
@@ -204,26 +225,29 @@
                 android:id="@+id/textView_place_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_comment"
                 android:drawableStart="@drawable/ic_comment"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_small"
+                android:paddingLeft="@dimen/spacing_medium"
+                android:paddingRight="@dimen/spacing_small"
                 android:paddingStart="@dimen/spacing_medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_small"
                 app:parkingCount="@{parking.countComments}"
                 tools:text=":100" />
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/spacing_small"
+                android:paddingLeft="@dimen/spacing_medium"
+                android:paddingRight="@dimen/spacing_small"
                 android:paddingStart="@dimen/spacing_medium"
-                android:src="@drawable/ic_favorite"
-                android:tint="@color/colorAccent" />
-
+                android:tint="@color/colorAccent"
+                app:srcCompat="@drawable/ic_favorite" />
 
         </LinearLayout>
-
 
     </RelativeLayout>
 

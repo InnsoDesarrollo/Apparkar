@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imageView_icon_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_time" />
+
+        <Spinner
+            android:id="@+id/textView_values_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imageView_icon_time"
+            android:layout_toRightOf="@+id/imageView_icon_time"
+            android:layout_marginRight="@dimen/spacing_large"
+            android:layout_marginLeft="@dimen/spacing_large"
+            android:textSize="@dimen/font_large"
+            android:textStyle="bold"
+            tools:text="Cobro por: minuto" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView_icon_time"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/imageView_value_car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:drawableLeft="@drawable/ic_car"
+                android:drawableStart="@drawable/ic_car"
+                android:gravity="center"
+                android:hint="Valor Carro"
+                android:inputType="number"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/imageView_value_motorbike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_motorbike"
+                android:drawableStart="@drawable/ic_motorbike"
+                android:hint="Valor Moto"
+                android:inputType="number"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/imageView_value_bike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_bike"
+                android:drawableStart="@drawable/ic_bike"
+                android:hint="Valor Bicicleta"
+                android:inputType="number"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

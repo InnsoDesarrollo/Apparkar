@@ -68,11 +68,11 @@
             android:id="@+id/button_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_location"
             app:elevation="4dp"
             app:fabSize="mini"
             app:layout_anchor="@+id/bottom_sheet"
-            app:layout_anchorGravity="center|top" />
+            app:layout_anchorGravity="center|top"
+            app:srcCompat="@drawable/ic_location" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/button_add_location"
@@ -80,9 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/spacing_large"
-            android:src="@drawable/ic_add"
             android:visibility="invisible"
-            app:elevation="4dp" />
+            app:elevation="4dp"
+            app:srcCompat="@drawable/ic_add" />
 
     </android.support.design.widget.CoordinatorLayout>
 
