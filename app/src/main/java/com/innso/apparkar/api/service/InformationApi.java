@@ -3,6 +3,7 @@ package com.innso.apparkar.api.service;
 import com.innso.apparkar.api.models.Parking;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -14,6 +15,6 @@ public interface InformationApi {
     Observable<List<Parking>> getParkingData();
 
     @PUT("parking_lots.json")
-    Observable<List<Parking>> addNewParking(Parking newParking);
+    Observable<Objects> addNewParking(Parking newParking);
 
 }

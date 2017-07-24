@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.innso.apparkar.ui.viewModels.RegisterViewModel"
+            type="com.innso.apparkar.ui.viewModels.RegisterViewModel"/>
     </data>
 
     <android.support.percent.PercentRelativeLayout

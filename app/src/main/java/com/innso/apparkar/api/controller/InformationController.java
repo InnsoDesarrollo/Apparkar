@@ -4,6 +4,7 @@ import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.service.InformationApi;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,6 +20,12 @@ public class InformationController {
 
     public Observable<List<Parking>> getParkingSlots() {
         return informationApi.getParkingData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Objects> addParkingSlot(Parking parking) {
+        return informationApi.addNewParking(parking)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
