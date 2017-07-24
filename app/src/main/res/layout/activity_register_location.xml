@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.innso.apparkar.ui.viewModels.RegisterViewModel"
+    </data>
+
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,9 +29,10 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/editText_address"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_heightPercent="10%"
+            app:layout_heightPercent="50%"
             tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
 
         <LinearLayout
@@ -71,7 +79,8 @@
             layout="@layout/view_parking_values"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_location_type" />
+            android:layout_below="@+id/layout_location_type"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/button_next"

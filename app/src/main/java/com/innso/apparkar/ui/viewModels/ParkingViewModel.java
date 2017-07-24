@@ -4,7 +4,7 @@ import android.databinding.ObservableField;
 
 import com.innso.apparkar.api.models.Parking;
 
-public class ParkingViewModel {
+public class ParkingViewModel extends BaseViewModel {
 
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> address = new ObservableField<>();
@@ -17,6 +17,9 @@ public class ParkingViewModel {
     public ObservableField<Integer> countComments = new ObservableField<>();
 
     public ObservableField<Boolean> hasCost = new ObservableField<>();
+
+    public ParkingViewModel() {
+    }
 
     public ParkingViewModel(Parking parking) {
         this.name.set(parking.getName());
@@ -31,5 +34,4 @@ public class ParkingViewModel {
             this.motorbikeCost.set(parking.getPrices().getMotorbikeCost());
         }
     }
-
 }
