@@ -1,5 +1,7 @@
 package com.innso.apparkar.api.controller;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.innso.apparkar.api.models.maps.Geometry;
 import com.innso.apparkar.api.models.maps.MapsResponse;
 import com.innso.apparkar.api.models.maps.Result;
 import com.innso.apparkar.api.service.MapsApi;
@@ -33,6 +35,22 @@ public class MapsController {
             address = result.get(0).getFormattedAddress();
         }
         return Observable.just(address);
+    }
+
+    public Observable<LatLng> getLocaionByAddress(String address) {
+        return mapsApi.getLatLgn(address).subscribeOn(Schedulers.io())
+                .flatMap(this::getLocation)
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private Observable<LatLng> getLocation(MapsResponse mapsResponse) {
+        List<Result> result = mapsResponse.getResults();
+        LatLng locaton = null;
+        if (result != null && !result.isEmpty()) {
+            Geometry.MapsLocation addressLocation = result.get(0).getLocation();
+            locaton = new LatLng(addressLocation.getLatitude(), addressLocation.getLongitude());
+        }
+        return Observable.just(locaton);
     }
 
 

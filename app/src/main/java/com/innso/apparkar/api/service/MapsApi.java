@@ -10,4 +10,7 @@ public interface MapsApi {
 
     @GET("api/geocode/json")
     Observable<MapsResponse> getAddress(@Query("latlng") String latLgn);
+
+    @GET("api/geocode/json")
+    Observable<MapsResponse> getLatLgn(@Query("address") String address);
 }
