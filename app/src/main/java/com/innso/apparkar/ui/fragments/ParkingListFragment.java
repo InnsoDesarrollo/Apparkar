@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.innso.apparkar.api.controller.InformationController;
 import com.innso.apparkar.api.models.Parking;
+import com.innso.apparkar.ui.interfaces.GenericItemAbstract;
 import com.innso.apparkar.ui.viewModels.ParkingViewModel;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class ParkingListFragment extends BasePlacesFragment {
 
     private void updateParkingSlots(List<Parking> parkingSlots) {
         for (int i = 0; i < parkingSlots.size(); i++) {
-            adapter.addItem(new ParkingViewModel(parkingSlots.get(i)));
+            adapter.addItem(new GenericItemAbstract(new ParkingViewModel(parkingSlots.get(i))));
         }
     }
 }
