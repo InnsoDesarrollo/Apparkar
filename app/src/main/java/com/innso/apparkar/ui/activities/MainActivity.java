@@ -190,7 +190,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         updateLocation();
     }
 
-
     private void updateLocation() {
 
         if (currentLocation != null && mMap != null) {
