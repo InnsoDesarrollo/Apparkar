@@ -2,19 +2,19 @@ package com.innso.apparkar.api.service;
 
 import com.innso.apparkar.api.models.Parking;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.PUT;
+import retrofit2.http.POST;
 
 public interface InformationApi {
 
     @GET("parking_lots.json")
-    Observable<List<Parking>> getParkingData();
+    Observable<Map<String, Parking>> getParkingData();
 
-    @PUT("parking_lots.json")
-    Observable<Objects> addNewParking(Parking newParking);
+    @POST("parking_lots.json/")
+    Observable<Parking> addNewParking(@Body Parking newParking);
 
 }

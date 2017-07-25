@@ -14,6 +14,12 @@ public class ReferencePoint {
     @SerializedName("address")
     String address;
 
+    public ReferencePoint(double lat, double lgn, String address) {
+        this.latitude = lat;
+        this.longitude = lgn;
+        this.address = address;
+    }
+
     public LatLng getPosition() {
         return new LatLng(latitude, longitude);
     }

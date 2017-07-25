@@ -92,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary"
-            android:text="Siguiente"
+            android:onClick="@{viewModel::addNewPlace}"
+            android:text="@string/copy.save"
             android:textColor="@android:color/white" />
 
     </android.support.percent.PercentRelativeLayout>

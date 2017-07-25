@@ -13,4 +13,5 @@
     <string name="copy.others">Otros</string>
     <string name="copy.petrol_station">Combustible</string>
     <string name="copy.local_parking">Parqueaderos</string>
+    <string name="copy.save">Guardar</string>
 </resources>

@@ -40,7 +40,7 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     private SupportMapFragment mapFragment;
 
-    ActivityRegisterLocationBinding binding;
+    private ActivityRegisterLocationBinding binding;
 
     @Inject
     MapsController mapsController;
@@ -96,8 +96,8 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     private void subscribe() {
         registerViewModel.showParkingInformation().subscribe(this::showParkingInformation);
+        registerViewModel.finisRegisterObserver().subscribe(o -> finish());
     }
-
 
     private void showParkingInformation(boolean show) {
         if (show) {
@@ -128,10 +128,11 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
         mMap.setOnMarkerDragListener(new OnMarkerDragListenerAdapter() {
 
             @Override
-            public void onMarkerDrag(Marker marker) {
+            public void onMarkerDragEnd(Marker marker) {
                 LatLng latLng = marker.getPosition();
                 currentLocation.setLongitude(latLng.longitude);
                 currentLocation.setLatitude(latLng.latitude);
+                registerViewModel.setLocation(latLng);
                 updateLocationAddress();
             }
         });
@@ -140,16 +141,26 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     private void updateLocation() {
 
         if (currentLocation != null && mMap != null) {
+
             LatLng newPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(newPosition)
-                    .zoom(15)
-                    .bearing(0)
-                    .build();
+
+            registerViewModel.setLocation(newPosition);
+
+            CameraPosition cameraPosition = getCameraPosition(newPosition);
+
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
             mMap.addMarker(new MarkerOptions().position(newPosition).draggable(true));
         }
+    }
+
+    @NonNull
+    private CameraPosition getCameraPosition(LatLng newPosition) {
+        return new CameraPosition.Builder()
+                .target(newPosition)
+                .zoom(15)
+                .bearing(0)
+                .build();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.innso.apparkar.ui.viewModels;
 
 import android.databinding.ObservableField;
+import android.text.TextUtils;
 
 import com.innso.apparkar.api.models.Parking;
 
@@ -16,7 +17,7 @@ public class ParkingViewModel extends BaseViewModel {
     public ObservableField<Integer> countDislikes = new ObservableField<>(0);
     public ObservableField<Integer> countComments = new ObservableField<>(0);
 
-    public ObservableField<Boolean> hasCost = new ObservableField<>();
+    public ObservableField<Boolean> hasCost = new ObservableField<>(false);
 
     public ParkingViewModel() {
     }
@@ -34,4 +35,5 @@ public class ParkingViewModel extends BaseViewModel {
             this.motorbikeCost.set(parking.getPrices().getMotorbikeCost());
         }
     }
+
 }

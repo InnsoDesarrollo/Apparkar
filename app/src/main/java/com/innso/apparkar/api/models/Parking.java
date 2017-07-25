@@ -20,6 +20,25 @@ public class Parking {
     @SerializedName("dislike")
     int countDislikes = 0;
 
+    public Parking() {
+    }
+
+    public void setReferencePoint(ReferencePoint referencePoint) {
+        this.referencePoint = referencePoint;
+    }
+
+    public void setPrices(ParkingPrice prices) {
+        this.prices = prices;
+    }
+
+    public void setCountLikes(int countLikes) {
+        this.countLikes = countLikes;
+    }
+
+    public void setCountDislikes(int countDislikes) {
+        this.countDislikes = countDislikes;
+    }
+
     public String getName() {
         return name;
     }

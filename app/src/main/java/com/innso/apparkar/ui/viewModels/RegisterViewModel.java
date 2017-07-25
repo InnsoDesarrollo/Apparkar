@@ -1,10 +1,14 @@
 package com.innso.apparkar.ui.viewModels;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.innso.apparkar.R;
 import com.innso.apparkar.api.controller.InformationController;
 import com.innso.apparkar.api.models.Parking;
+import com.innso.apparkar.api.models.ParkingPrice;
+import com.innso.apparkar.api.models.ReferencePoint;
 
 import javax.inject.Inject;
 
@@ -18,7 +22,10 @@ public class RegisterViewModel extends ParentViewModel {
     private final int TYPE_PARKING = 1;
 
     private BehaviorSubject<Boolean> showParkingInformation = BehaviorSubject.createDefault(false);
-    private BehaviorSubject<Boolean> showPetrolStationInformation = BehaviorSubject.createDefault(false);
+
+    private PublishSubject<Boolean> finishRegister = PublishSubject.create();
+
+    private LatLng placeLocation;
 
     public ParkingViewModel parkingViewModel;
 
@@ -34,6 +41,10 @@ public class RegisterViewModel extends ParentViewModel {
         addChild(parkingViewModel);
     }
 
+    public void setLocation(LatLng newLocation) {
+        this.placeLocation = newLocation;
+    }
+
     public void onSelectLocationPlace(View view) {
         int viewId = view.getId();
         switch (viewId) {
@@ -44,23 +55,53 @@ public class RegisterViewModel extends ParentViewModel {
         }
     }
 
-    public void addNewPlace() {
+    public void addNewPlace(View view) {
         if (locationType != -1) {
             if (locationType == TYPE_PARKING) {
-                createNewParking();
+                addNewParking();
             }
         } else {
             showSnackBarError("Seleccione un tipo de lugar");
         }
     }
 
-    private void createNewParking() {
-        informationController.addParkingSlot(new Parking());
+    private void addNewParking() {
+        showLoading();
+        Parking parking = createParking();
+        informationController.addParkingSlot(parking).subscribe(o -> hideLoading());
+    }
+
+    private Parking createParking() {
+        Parking parking = new Parking();
+
+        if (placeLocation != null) {
+            parking.setReferencePoint(new ReferencePoint(placeLocation.latitude, placeLocation.longitude, parkingViewModel.address.get()));
+        }
+        parking.setName(parkingViewModel.name.get());
+
+        parking.setPrices(getParkingPrice());
+
+        return parking;
+    }
+
+    private ParkingPrice getParkingPrice() {
+        ParkingPrice prices = null;
+        if (parkingViewModel.hasCost.get()) {
+            prices = new ParkingPrice(parkingViewModel.costDescription.get());
+            prices.setCarCost(parkingViewModel.cartCost.get());
+            prices.setBikeCost(parkingViewModel.bikeCost.get());
+            prices.setCarCost(parkingViewModel.motorbikeCost.get());
+        }
+        return prices;
     }
 
 
     public Observable<Boolean> showParkingInformation() {
         return showParkingInformation.subscribeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Boolean> finisRegisterObserver() {
+        return finishRegister.subscribeOn(AndroidSchedulers.mainThread());
     }
 
 }
