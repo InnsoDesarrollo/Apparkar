@@ -10,22 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.innso.apparkar.R;
-import com.innso.apparkar.api.controller.InformationController;
-import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.databinding.FragmentPlacesListBinding;
 import com.innso.apparkar.ui.BaseFragment;
 import com.innso.apparkar.ui.adapters.GenericAdapter;
 import com.innso.apparkar.ui.factories.GenericAdapterFactory;
 import com.innso.apparkar.ui.interfaces.GenericItemView;
 import com.innso.apparkar.ui.items.ParkingItem;
-import com.innso.apparkar.ui.viewModels.ParkingViewModel;
 
 import java.lang.annotation.Retention;
-import java.util.List;
 
-import javax.inject.Inject;
-
-import static com.innso.apparkar.ui.fragments.BasePlacesFragment.PARKING_LIST;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class BasePlacesFragment extends BaseFragment {

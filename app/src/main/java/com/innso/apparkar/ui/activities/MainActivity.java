@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
-import com.innso.apparkar.api.controller.InformationController;
+import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ReferencePoint;
 import com.innso.apparkar.databinding.ActivityMapsBinding;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     private int currentOpenItem = 0;
 
     @Inject
-    InformationController informationController;
+    PlacesController placesController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         bottomSheetBehavior.setPeekHeight(getResources().getInteger(R.integer.min_height_bottom_map));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
-        informationController.getParkingSlots().subscribe(this::updateParkingSlots);
+        placesController.getParkingSlots().subscribe(this::updateParkingSlots);
         initFragments();
     }
 

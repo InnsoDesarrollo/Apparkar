@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.innso.apparkar.api.config.ApiConfig;
 import com.innso.apparkar.api.config.TokenAuthenticator;
-import com.innso.apparkar.api.service.InformationApi;
+import com.innso.apparkar.api.service.PlacesApi;
 import com.innso.apparkar.api.service.MapsApi;
 
 import java.util.concurrent.TimeUnit;
@@ -27,8 +27,8 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public InformationApi informtaionApi(@Named("firebase") Retrofit retrofit) {
-        return retrofit.create(InformationApi.class);
+    public PlacesApi informtaionApi(@Named("firebase") Retrofit retrofit) {
+        return retrofit.create(PlacesApi.class);
     }
 
     @Provides

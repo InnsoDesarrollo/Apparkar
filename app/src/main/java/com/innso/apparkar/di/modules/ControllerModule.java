@@ -1,8 +1,8 @@
 package com.innso.apparkar.di.modules;
 
-import com.innso.apparkar.api.controller.InformationController;
+import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.controller.MapsController;
-import com.innso.apparkar.api.service.InformationApi;
+import com.innso.apparkar.api.service.PlacesApi;
 import com.innso.apparkar.api.service.MapsApi;
 
 import javax.inject.Singleton;
@@ -15,8 +15,8 @@ public class ControllerModule {
 
     @Provides
     @Singleton
-    InformationController applicationApiController(InformationApi applicationApi) {
-        return new InformationController(applicationApi);
+    PlacesController applicationApiController(PlacesApi applicationApi) {
+        return new PlacesController(applicationApi);
     }
 
     @Provides

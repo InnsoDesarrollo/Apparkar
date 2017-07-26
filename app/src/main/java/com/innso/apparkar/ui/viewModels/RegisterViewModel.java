@@ -1,11 +1,10 @@
 package com.innso.apparkar.ui.viewModels;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.innso.apparkar.R;
-import com.innso.apparkar.api.controller.InformationController;
+import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ParkingPrice;
 import com.innso.apparkar.api.models.ReferencePoint;
@@ -32,7 +31,7 @@ public class RegisterViewModel extends ParentViewModel {
     public int locationType;
 
     @Inject
-    InformationController informationController;
+    PlacesController placesController;
 
     public RegisterViewModel() {
         this.parkingViewModel = new ParkingViewModel();
@@ -68,7 +67,7 @@ public class RegisterViewModel extends ParentViewModel {
     private void addNewParking() {
         showLoading();
         Parking parking = createParking();
-        informationController.addParkingSlot(parking).subscribe(o -> hideLoading());
+        placesController.addParkingSlot(parking).subscribe(o -> hideLoading());
     }
 
     private Parking createParking() {

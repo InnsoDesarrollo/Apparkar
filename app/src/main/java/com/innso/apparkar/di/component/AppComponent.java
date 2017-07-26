@@ -4,7 +4,7 @@ package com.innso.apparkar.di.component;
 import com.google.firebase.database.FirebaseDatabase;
 import com.innso.apparkar.api.config.ApiConfig;
 import com.innso.apparkar.api.config.TokenAuthenticator;
-import com.innso.apparkar.api.controller.InformationController;
+import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.controller.MapsController;
 import com.innso.apparkar.di.modules.ApiModule;
 import com.innso.apparkar.di.modules.AppModule;
@@ -51,7 +51,7 @@ public interface AppComponent {
     /**
      * Controllers
      */
-    InformationController informationController();
+    PlacesController informationController();
 
     MapsController mapsController();
 }

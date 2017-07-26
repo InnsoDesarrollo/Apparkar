@@ -9,12 +9,12 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public interface InformationApi {
+public interface PlacesApi {
 
-    @GET("parking_lots.json")
+    @GET("parking_lots.json?orderBy=\"status\"&equalTo=\"approved\"")
     Observable<Map<String, Parking>> getParkingData();
 
-    @POST("parking_lots.json/")
+    @POST("parking_lots.json")
     Observable<Parking> addNewParking(@Body Parking newParking);
 
 }

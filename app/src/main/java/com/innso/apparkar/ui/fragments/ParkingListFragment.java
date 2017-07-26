@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.innso.apparkar.api.controller.InformationController;
+import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.ui.interfaces.GenericItemAbstract;
 import com.innso.apparkar.ui.viewModels.ParkingViewModel;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 public class ParkingListFragment extends BasePlacesFragment {
 
     @Inject
-    InformationController informationController;
+    PlacesController placesController;
 
     @Nullable
     @Override
@@ -31,7 +31,7 @@ public class ParkingListFragment extends BasePlacesFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        informationController.getParkingSlots().subscribe(this::updateParkingSlots);
+        placesController.getParkingSlots().subscribe(this::updateParkingSlots);
     }
 
     private void updateParkingSlots(List<Parking> parkingSlots) {

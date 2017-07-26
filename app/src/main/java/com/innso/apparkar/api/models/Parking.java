@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Parking {
 
+    private transient final String KEY_PENDING_REVIEW = "pending_review";
+
     @SerializedName("name")
     String name;
 
@@ -20,7 +22,11 @@ public class Parking {
     @SerializedName("dislike")
     int countDislikes = 0;
 
+    @SerializedName("status")
+    String status;
+
     public Parking() {
+        status = KEY_PENDING_REVIEW;
     }
 
     public void setReferencePoint(ReferencePoint referencePoint) {
