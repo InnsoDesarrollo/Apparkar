@@ -178,7 +178,6 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
-
     private void updateLocationAddress() {
         mapsController.getAddressDescription(currentLocation.getLatitude(), currentLocation.getLongitude())
                 .subscribe(address -> binding.editTextAddress.setText(address));
