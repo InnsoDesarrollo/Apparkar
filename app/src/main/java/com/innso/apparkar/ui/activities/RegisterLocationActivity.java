@@ -179,7 +179,9 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     }
 
     private void updateLocationAddress() {
-        mapsController.getAddressDescription(currentLocation.getLatitude(), currentLocation.getLongitude())
-                .subscribe(address -> binding.editTextAddress.setText(address));
+        if (currentLocation != null) {
+            mapsController.getAddressDescription(currentLocation.getLatitude(), currentLocation.getLongitude())
+                    .subscribe(address -> binding.editTextAddress.setText(address));
+        }
     }
 }
