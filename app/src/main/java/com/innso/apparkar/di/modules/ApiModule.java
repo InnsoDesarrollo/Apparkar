@@ -27,7 +27,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public PlacesApi informtaionApi(@Named("firebase") Retrofit retrofit) {
+    public PlacesApi placesApi(@Named("firebase") Retrofit retrofit) {
         return retrofit.create(PlacesApi.class);
     }
 

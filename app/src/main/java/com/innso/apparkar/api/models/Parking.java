@@ -3,15 +3,12 @@ package com.innso.apparkar.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Parking {
+public class Parking extends BasePlace{
 
     private transient final String KEY_PENDING_REVIEW = "pending_review";
 
     @SerializedName("name")
     String name;
-
-    @SerializedName("reference_point")
-    ReferencePoint referencePoint;
 
     @SerializedName("prices")
     ParkingPrice prices;
@@ -21,9 +18,6 @@ public class Parking {
 
     @SerializedName("dislike")
     int countDislikes = 0;
-
-    @SerializedName("status")
-    String status;
 
     public Parking() {
         status = KEY_PENDING_REVIEW;

@@ -10,14 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.innso.apparkar.R;
+import com.innso.apparkar.api.controller.PlacesController;
+import com.innso.apparkar.api.models.BasePlace;
+import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.databinding.FragmentPlacesListBinding;
 import com.innso.apparkar.ui.BaseFragment;
 import com.innso.apparkar.ui.adapters.GenericAdapter;
 import com.innso.apparkar.ui.factories.GenericAdapterFactory;
+import com.innso.apparkar.ui.interfaces.GenericItemAbstract;
 import com.innso.apparkar.ui.interfaces.GenericItemView;
 import com.innso.apparkar.ui.items.ParkingItem;
+import com.innso.apparkar.ui.viewModels.ParkingViewModel;
 
 import java.lang.annotation.Retention;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -25,18 +35,20 @@ public class BasePlacesFragment extends BaseFragment {
 
     public static final int PARKING_LIST = 0;
     public static final int PETROL_STATION_LIST = 1;
+    public static final int OTHER_PLACER_LIST = 2;
 
     protected FragmentPlacesListBinding binding;
 
     protected GenericAdapter adapter;
 
-    public static BasePlacesFragment newInstance(@fragmentType int fragmentType){
-        BasePlacesFragment newFragment;
-        if(fragmentType == PARKING_LIST ){
-            newFragment = new ParkingListFragment();
-        } else {
-            newFragment = new PetrolStationsListFragment();
-        }
+    private int fragmentType;
+
+    @Inject
+    PlacesController placesController;
+
+    public static BasePlacesFragment newInstance(@fragmentType int fragmentType) {
+        BasePlacesFragment newFragment = new BasePlacesFragment();
+        newFragment.fragmentType = fragmentType;
         return newFragment;
     }
 
@@ -44,8 +56,27 @@ public class BasePlacesFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_places_list, container, false);
+        getComponent().inject(this);
         initViews();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getPlaces().subscribe(this::updatePlaces);
+    }
+
+    public Observable<List<BasePlace>> getPlaces() {
+        switch (fragmentType) {
+            case PARKING_LIST:
+                return placesController.getParkingSlots();
+            case PETROL_STATION_LIST:
+                return placesController.getPetrolStations();
+            case OTHER_PLACER_LIST:
+            default:
+                return placesController.getOtherPlacesSlots();
+        }
     }
 
     private void initViews() {
@@ -66,7 +97,16 @@ public class BasePlacesFragment extends BaseFragment {
         binding.recyclerPlaces.setAdapter(adapter);
     }
 
+    private void updatePlaces(List<BasePlace> basePlaces) {
+        for (int i = 0; i < basePlaces.size(); i++) {
+            if (basePlaces.get(i) instanceof Parking) {
+                adapter.addItem(new GenericItemAbstract(new ParkingViewModel((Parking) basePlaces.get(i))));
+            }
+        }
+    }
+
     @Retention(SOURCE)
-    @IntDef({PARKING_LIST, PETROL_STATION_LIST})
-    public @interface fragmentType{}
+    @IntDef({PARKING_LIST, PETROL_STATION_LIST, OTHER_PLACER_LIST})
+    public @interface fragmentType {
+    }
 }

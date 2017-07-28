@@ -24,13 +24,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
 import com.innso.apparkar.api.controller.PlacesController;
+import com.innso.apparkar.api.models.BasePlace;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ReferencePoint;
 import com.innso.apparkar.databinding.ActivityMapsBinding;
 import com.innso.apparkar.ui.BaseActivity;
 import com.innso.apparkar.ui.fragments.BasePlacesFragment;
-import com.innso.apparkar.ui.fragments.ParkingListFragment;
-import com.innso.apparkar.ui.fragments.PetrolStationsListFragment;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 import com.innso.apparkar.util.BitmapUtils;
 
@@ -52,6 +51,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     private BasePlacesFragment parkingListFragment;
 
     private BasePlacesFragment petrolStationsListFragment;
+
+    private BasePlacesFragment otherPlcaesFragment;
 
     private GoogleApiClient googleApiClient;
 
@@ -93,8 +94,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     }
 
     private void initFragments() {
-        parkingListFragment = new ParkingListFragment();
-        petrolStationsListFragment = new PetrolStationsListFragment();
+        parkingListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.PARKING_LIST);
+        petrolStationsListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.OTHER_PLACER_LIST);
+        otherPlcaesFragment = BasePlacesFragment.newInstance(BasePlacesFragment.OTHER_PLACER_LIST);
         replaceFragment(parkingListFragment);
     }
 
@@ -172,6 +174,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
                 break;
             case R.id.action_petrol_station:
                 replaceFragment(petrolStationsListFragment);
+                break;
+            case R.id.action_other_places:
+                replaceFragment(otherPlcaesFragment);
         }
     }
 
@@ -210,7 +215,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         }
     }
 
-    private void updateParkingSlots(List<Parking> parkingSlots) {
+    private void updateParkingSlots(List<BasePlace> parkingSlots) {
 
         for (int i = 0, size = parkingSlots.size(); i < size; i++) {
 
@@ -218,9 +223,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         }
     }
 
-    private void drawParking(Parking parking) {
-        int marketIcon = parking.hasCost() ? R.drawable.ic_map_parking : R.drawable.ic_map_parking_free;
-        addMarket(parking.getName(), parking.getReferencePoint(), marketIcon);
+    private void drawParking(BasePlace place) {
+        if (place instanceof Parking) {
+            Parking parking = (Parking) place;
+            int marketIcon = parking.hasCost() ? R.drawable.ic_map_parking : R.drawable.ic_map_parking_free;
+            addMarket(parking.getName(), parking.getReferencePoint(), marketIcon);
+        }
     }
 
     private void addMarket(String name, ReferencePoint referencePoint, @DrawableRes int res) {

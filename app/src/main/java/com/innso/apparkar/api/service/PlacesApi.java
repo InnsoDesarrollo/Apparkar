@@ -8,11 +8,12 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface PlacesApi {
 
-    @GET("parking_lots.json?orderBy=\"status\"&equalTo=\"approved\"")
-    Observable<Map<String, Parking>> getParkingData();
+    @GET("parking_lots.json")
+    Observable<Map<String, Parking>> getParkingData(@Query("orderBy") String attribute, @Query("equalTo") String value);
 
     @POST("parking_lots.json")
     Observable<Parking> addNewParking(@Body Parking newParking);
