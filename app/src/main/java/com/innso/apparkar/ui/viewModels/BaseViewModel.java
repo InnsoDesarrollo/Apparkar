@@ -103,28 +103,20 @@ public class BaseViewModel {
         showProgressDialog.onNext(event);
     }
 
+    protected void showSnackBarError(String message) {
+        showSnackBarMessage(SnackBarFactory.TYPE_ERROR, message, Snackbar.LENGTH_LONG);
+    }
+
     public void showServiceError(Throwable throwable) {
         showSnackBarMessage(SnackBarFactory.TYPE_ERROR, ErrorUtil.getMessageError(throwable), Snackbar.LENGTH_LONG);
         hideLoading();
         hideProgressDialog();
     }
 
-    protected void showSnackBarError(String message) {
-        showSnackBarMessage(SnackBarFactory.TYPE_ERROR, message, Snackbar.LENGTH_LONG);
-    }
-
-    protected void showSnackBarError(int messageId) {
-        showSnackBarMessage(SnackBarFactory.TYPE_ERROR, messageId, Snackbar.LENGTH_LONG);
-    }
-
     protected void eventSnackBar(SnackBarEvent event) {
         snackBarSubject.onNext(event);
     }
 
-    protected void showSnackBarMessage(@SnackBarFactory.SnackBarType String typeSnackBar, int stringResId, int duration) {
-        String message = resourceProvider.getString(stringResId);
-        showSnackBarMessage(typeSnackBar, message, duration);
-    }
 
     protected void showSnackBarMessage(@SnackBarFactory.SnackBarType String typeSnackBar, String message, int duration) {
         snackBarSubject.onNext(new SnackBarEvent(typeSnackBar, message, duration));

@@ -65,9 +65,9 @@ public class RegisterViewModel extends ParentViewModel {
     }
 
     private void addNewParking() {
-        showLoading();
+        showProgressDialog(R.string.copy_please_wait);
         Parking parking = createParking();
-        placesController.addParkingSlot(parking).subscribe(o -> hideLoading());
+        placesController.addParkingSlot(parking).subscribe(o -> hideProgressDialog(), this::showServiceError);
     }
 
     private Parking createParking() {

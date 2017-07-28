@@ -7,6 +7,7 @@
 
     <string name="package_app">package:com.innso.apparkar</string>
 
+    <string name="copy.please_wait">Un momento por favor</string>
     <string name="copy.navigate">Navegar</string>
     <string name="copy.add_comment">Comentar</string>
     <string name="copy.settings">Configuración</string>

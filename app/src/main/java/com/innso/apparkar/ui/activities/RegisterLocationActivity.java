@@ -95,6 +95,8 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     }
 
     private void subscribe() {
+        registerViewModel.observableShowProgress().subscribe(this::showProgressDialog);
+        registerViewModel.observableSnackBar().subscribe(e -> showError(binding.getRoot(), e.getMessage()));
         registerViewModel.showParkingInformation().subscribe(this::showParkingInformation);
         registerViewModel.finisRegisterObserver().subscribe(o -> finish());
     }
