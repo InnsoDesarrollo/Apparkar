@@ -15,10 +15,10 @@ public class ParkingBinding {
 
     @BindingAdapter({"parkingValue"})
     public static void setParkingValue(TextView textView, String value) {
-        if (!TextUtils.isEmpty(value)) {
+        if (!TextUtils.isEmpty(value) && !value.equals("-1")) {
             textView.setText(" : " + value);
         } else {
-            textView.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.GONE);
         }
     }
 
@@ -56,5 +56,4 @@ public class ParkingBinding {
             }
         });
     }
-
 }

@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 
@@ -98,7 +99,19 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
         registerViewModel.observableShowProgress().subscribe(this::showProgressDialog);
         registerViewModel.observableSnackBar().subscribe(e -> showError(binding.getRoot(), e.getMessage()));
         registerViewModel.showParkingInformation().subscribe(this::showParkingInformation);
-        registerViewModel.finisRegisterObserver().subscribe(o -> finish());
+        registerViewModel.finisRegisterObserver().subscribe(this::locationUploaded);
+    }
+
+    private void locationUploaded(boolean forceUpdate) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.register_thanks)
+                .setMessage(R.string.register_thanks_message)
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    finish();
+                })
+                .setIcon(R.mipmap.ic_app)
+                .setCancelable(false)
+                .show();
     }
 
     private void showParkingInformation(boolean show) {
@@ -186,4 +199,5 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
                     .subscribe(address -> binding.editTextAddress.setText(address));
         }
     }
+
 }

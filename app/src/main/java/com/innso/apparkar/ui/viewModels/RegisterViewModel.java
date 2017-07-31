@@ -1,6 +1,7 @@
 package com.innso.apparkar.ui.viewModels;
 
 import android.databinding.ObservableField;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -75,10 +76,15 @@ public class RegisterViewModel extends ParentViewModel {
         if (parkingViewModel.isValidToSave()) {
             showProgressDialog(R.string.copy_please_wait);
             Parking parking = createParking();
-            placesController.addParkingSlot(parking).subscribe(o -> hideProgressDialog(), this::showServiceError);
+            placesController.addParkingSlot(parking).subscribe(this::registerComplete, this::showServiceError);
         } else {
             showSnackBarError(resourceProvider.getString(R.string.error_complete_all_fields));
         }
+    }
+
+    private void registerComplete(Parking object) {
+        hideProgressDialog();
+        finishRegister.onNext(true);
     }
 
     private Parking createParking() {
@@ -100,10 +106,13 @@ public class RegisterViewModel extends ParentViewModel {
     private ParkingPrice getParkingPrice() {
         ParkingPrice prices = null;
         if (parkingViewModel.hasCost.get()) {
+            String carCost = parkingViewModel.cartCost.get();
+            String motorbikeCost = parkingViewModel.motorbikeCost.get();
+            String bikeCost = parkingViewModel.bikeCost.get();
             prices = new ParkingPrice(parkingViewModel.costDescription.get());
-            prices.setCarCost(Integer.parseInt(parkingViewModel.cartCost.get()));
-            prices.setBikeCost(Integer.parseInt(parkingViewModel.bikeCost.get()));
-            prices.setMotorbikeCost(Integer.parseInt(parkingViewModel.motorbikeCost.get()));
+            prices.setCarCost(TextUtils.isEmpty(carCost) ? -1 : Integer.parseInt(carCost));
+            prices.setMotorbikeCost(TextUtils.isEmpty(motorbikeCost) ? -1 : Integer.parseInt(motorbikeCost));
+            prices.setBikeCost(TextUtils.isEmpty(bikeCost) ? -1 : Integer.parseInt(bikeCost));
         }
         return prices;
     }

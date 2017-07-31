@@ -14,6 +14,7 @@ import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.BasePlace;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.databinding.FragmentPlacesListBinding;
+import com.innso.apparkar.ui.BaseActivity;
 import com.innso.apparkar.ui.BaseFragment;
 import com.innso.apparkar.ui.adapters.GenericAdapter;
 import com.innso.apparkar.ui.factories.GenericAdapterFactory;
@@ -21,6 +22,7 @@ import com.innso.apparkar.ui.interfaces.GenericItemAbstract;
 import com.innso.apparkar.ui.interfaces.GenericItemView;
 import com.innso.apparkar.ui.items.ParkingItem;
 import com.innso.apparkar.ui.viewModels.ParkingViewModel;
+import com.innso.apparkar.util.ErrorUtil;
 
 import java.lang.annotation.Retention;
 import java.util.List;
@@ -64,7 +66,7 @@ public class BasePlacesFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getPlaces().subscribe(this::updatePlaces);
+        getPlaces().subscribe(this::updatePlaces, e -> ((BaseActivity) getActivity()).showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
     }
 
     public Observable<List<BasePlace>> getPlaces() {
@@ -98,6 +100,7 @@ public class BasePlacesFragment extends BaseFragment {
     }
 
     private void updatePlaces(List<BasePlace> basePlaces) {
+        adapter.clear();
         for (int i = 0; i < basePlaces.size(); i++) {
             if (basePlaces.get(i) instanceof Parking) {
                 adapter.addItem(new GenericItemAbstract(new ParkingViewModel((Parking) basePlaces.get(i))));

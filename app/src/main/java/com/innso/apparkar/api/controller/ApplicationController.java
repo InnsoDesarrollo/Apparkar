@@ -25,6 +25,6 @@ public class ApplicationController {
 
     private Boolean validateForceUpdate(GeneralInformation information) {
         int serverVersion = information.getBuildVersion();
-        return serverVersion != BuildConfig.VERSION_CODE;
+        return serverVersion > BuildConfig.VERSION_CODE;
     }
 }

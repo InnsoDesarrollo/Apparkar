@@ -169,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/font_small"
                 android:drawableTop="@drawable/ic_navigate"
+                android:onClick="@{parking::onNavegate}"
                 android:text="@string/copy.navigate"
                 android:textSize="@dimen/font_small" />
 

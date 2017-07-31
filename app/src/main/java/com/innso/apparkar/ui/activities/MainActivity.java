@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     private void initFragments() {
         parkingListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.PARKING_LIST);
-        petrolStationsListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.OTHER_PLACER_LIST);
+        petrolStationsListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.PETROL_STATION_LIST);
         otherPlcaesFragment = BasePlacesFragment.newInstance(BasePlacesFragment.OTHER_PLACER_LIST);
         replaceFragment(parkingListFragment);
     }
@@ -204,7 +204,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
         updateLocation();
     }
-    
+
     private CameraPosition getCameraPosition(double lat, double lgn) {
         return new CameraPosition.Builder()
                 .target(new LatLng(lat, lgn))

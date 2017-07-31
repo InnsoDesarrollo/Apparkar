@@ -21,6 +21,9 @@
     <string name="copy_by_hour">Por Hora</string>
     <string name="copy_free">Gratis</string>
 
+    <string name="register.thanks">¡Muchas Gracias!</string>
+    <string name="register.thanks_message">Gracias por contribuir! El lugar que agregaste entrará en revisión, por ahora lo pordras ver en las sección otros </string>
+
     <string name="splash.new_version">Nueva Version</string>
     <string name="splash.get_latest_version">Para seguir usando Apparkar, debes actualizar la version en la tienda</string>
     <string name="splash.checking_update">Verificando actualización</string>
