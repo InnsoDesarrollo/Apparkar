@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.innso.apparkar.api.config.ApiConfig;
 import com.innso.apparkar.api.config.TokenAuthenticator;
-import com.innso.apparkar.api.service.PlacesApi;
+import com.innso.apparkar.api.service.ApplicationApi;
 import com.innso.apparkar.api.service.MapsApi;
+import com.innso.apparkar.api.service.PlacesApi;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +25,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiModule {
 
     private static final int TIME_OUT = 20;
+
+    @Provides
+    @Singleton
+    public ApplicationApi applicationApi(@Named("firebase") Retrofit retrofit) {
+        return retrofit.create(ApplicationApi.class);
+    }
 
     @Provides
     @Singleton

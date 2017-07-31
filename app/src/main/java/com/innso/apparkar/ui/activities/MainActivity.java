@@ -32,6 +32,7 @@ import com.innso.apparkar.ui.BaseActivity;
 import com.innso.apparkar.ui.fragments.BasePlacesFragment;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 import com.innso.apparkar.util.BitmapUtils;
+import com.innso.apparkar.util.ErrorUtil;
 
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         bottomSheetBehavior.setPeekHeight(getResources().getInteger(R.integer.min_height_bottom_map));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
-        placesController.getParkingSlots().subscribe(this::updateParkingSlots);
+        placesController.getParkingSlots().subscribe(this::updateParkingSlots, e -> showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
         initFragments();
     }
 
@@ -203,8 +204,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
         updateLocation();
     }
-
-
+    
     private CameraPosition getCameraPosition(double lat, double lgn) {
         return new CameraPosition.Builder()
                 .target(new LatLng(lat, lgn))

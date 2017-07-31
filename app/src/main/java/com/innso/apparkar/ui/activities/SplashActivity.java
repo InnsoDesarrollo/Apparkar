@@ -5,63 +5,76 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ImageView;
 
 import com.innso.apparkar.R;
+import com.innso.apparkar.api.controller.ApplicationController;
+import com.innso.apparkar.databinding.ActivitySplashBinding;
+import com.innso.apparkar.ui.BaseActivity;
+import com.innso.apparkar.util.ErrorUtil;
 import com.innso.apparkar.util.GeneralAnimation;
 
-public class SplashActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class SplashActivity extends BaseActivity {
+
+    private ActivitySplashBinding binding;
 
     private boolean animationEnd;
 
-    private boolean loadDataEnd;
+    private boolean versionChecked;
 
-    private Runnable timeSplash = this::loadData;
-
-    private ImageView imageCar;
-
-    private ImageView imageParkingOption;
-
-    private ImageView imageGasOption;
-
-    private ImageView imageOptionOther;
+    @Inject
+    ApplicationController applicationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        init();
-        //TODO: Force update
-        new Handler().postDelayed(timeSplash, 5000);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        getComponent().inject(this);
+        binding.imageViewIcCar.post(this::initAnimation);
     }
 
-    private void init() {
-        imageCar = (ImageView) findViewById(R.id.imageView_ic_car);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        applicationController.forceUpdate().subscribe(this::validateVersion, e -> showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
+    }
 
-        imageParkingOption = (ImageView) findViewById(R.id.imageView_parking);
-
-        imageGasOption = (ImageView) findViewById(R.id.imageView_parking_free);
-
-        imageOptionOther = (ImageView) findViewById(R.id.imageView_wash_car);
-
-        imageCar.post(this::initAnimation);
+    private void validateVersion(boolean forceUpdate) {
+        if (forceUpdate) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.splash_new_version)
+                    .setMessage(R.string.splash_get_latest_version)
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        startActivity(new Intent(Intent.ACTION_VIEW)
+                                .setData(Uri.parse(getString(R.string.url_rappi_tendero))));
+                        finish();
+                    })
+                    .setIcon(R.mipmap.ic_app)
+                    .setCancelable(false)
+                    .show();
+        } else {
+            versionChecked = true;
+            notifyFinish();
+        }
     }
 
     private void initAnimation() {
 
         AnimatorSet startAnimation = new AnimatorSet();
 
-        ObjectAnimator moveCart = (ObjectAnimator) GeneralAnimation.getAppearFromRight(imageCar, 1300, 0, new AccelerateDecelerateInterpolator(), null);
+        ObjectAnimator moveCart = (ObjectAnimator) GeneralAnimation.getAppearFromRight(binding.imageViewIcCar, 1300, 0, new AccelerateDecelerateInterpolator(), null);
 
-        ObjectAnimator parkingOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(imageParkingOption, 600);
+        ObjectAnimator parkingOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(binding.imageViewParking, 600);
 
-        ObjectAnimator gasOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(imageGasOption, 600);
+        ObjectAnimator gasOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(binding.imageViewParkingFree, 600);
 
-        ObjectAnimator otherOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(imageOptionOther, 600);
+        ObjectAnimator otherOption = (ObjectAnimator) GeneralAnimation.getAnimationFadeIn(binding.imageViewWashCar, 600);
 
         startAnimation.playSequentially(moveCart, parkingOption, gasOption, otherOption);
 
@@ -76,13 +89,9 @@ public class SplashActivity extends AppCompatActivity {
         startAnimation.start();
     }
 
-    private void loadData() {
-        loadDataEnd = true;
-        notifyFinish();
-    }
 
     public void notifyFinish() {
-        if (animationEnd && loadDataEnd) {
+        if (animationEnd && versionChecked) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
