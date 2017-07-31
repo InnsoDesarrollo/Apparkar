@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="parking"
+            type="com.innso.apparkar.ui.viewModels.ParkingViewModel" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +26,8 @@
             android:layout_marginLeft="@dimen/spacing_xlarge"
             android:layout_marginRight="@dimen/spacing_xlarge"
             android:gravity="center"
-            android:hint="Nombre del parqueadero" />
+            android:hint="Nombre del parqueadero"
+            android:text="@={parking.name}" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView_icon_time"
@@ -26,23 +36,30 @@
             android:layout_alignLeft="@+id/editText_parking_name"
             android:layout_alignStart="@+id/editText_parking_name"
             android:layout_below="@+id/editText_parking_name"
+            android:layout_marginLeft="@dimen/spacing_xlarge"
+            android:layout_marginStart="@dimen/spacing_xlarge"
             android:layout_marginTop="@dimen/spacing_medium"
             app:srcCompat="@drawable/ic_time" />
 
-        <Spinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/textView_values_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/editText_parking_name"
             android:layout_alignRight="@+id/editText_parking_name"
             android:layout_below="@+id/editText_parking_name"
+            android:layout_marginEnd="@dimen/spacing_xlarge"
             android:layout_marginLeft="@dimen/spacing_large"
+            android:layout_marginRight="@dimen/spacing_xlarge"
             android:layout_marginStart="@dimen/spacing_large"
             android:layout_marginTop="@dimen/spacing_medium"
             android:layout_toEndOf="@+id/imageView_icon_time"
             android:layout_toRightOf="@+id/imageView_icon_time"
+            android:entries="@{parking.chargeTypes}"
+            android:gravity="center"
             android:textSize="@dimen/font_large"
             android:textStyle="bold"
+            app:paking_spinner_adapter="@{parking}"
             tools:text="Cobro por: minuto" />
 
         <LinearLayout
@@ -50,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView_icon_time"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="@{parking.hasCost ? View.VISIBLE : View.INVISIBLE}">
 
             <EditText
                 android:id="@+id/imageView_value_car"
@@ -58,11 +76,13 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_car"
                 android:drawableStart="@drawable/ic_car"
+                android:enabled="@{parking.hasCost}"
                 android:gravity="center"
                 android:hint="Valor Carro"
                 android:inputType="number"
                 android:paddingEnd="@dimen/spacing_medium"
                 android:paddingStart="@dimen/spacing_medium"
+                android:text="@={parking.cartCost}"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold" />
 
@@ -72,10 +92,13 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_motorbike"
                 android:drawableStart="@drawable/ic_motorbike"
+                android:enabled="@{parking.hasCost}"
+                android:gravity="center"
                 android:hint="Valor Moto"
                 android:inputType="number"
                 android:paddingEnd="@dimen/spacing_medium"
                 android:paddingStart="@dimen/spacing_medium"
+                android:text="@={parking.motorbikeCost}"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold" />
 
@@ -85,10 +108,13 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_bike"
                 android:drawableStart="@drawable/ic_bike"
+                android:enabled="@{parking.hasCost}"
+                android:gravity="center"
                 android:hint="Valor Bicicleta"
                 android:inputType="number"
                 android:paddingEnd="@dimen/spacing_medium"
                 android:paddingStart="@dimen/spacing_medium"
+                android:text="@={parking.bikeCost}"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold" />
 

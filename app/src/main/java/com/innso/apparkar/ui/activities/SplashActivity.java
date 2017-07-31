@@ -83,8 +83,8 @@ public class SplashActivity extends AppCompatActivity {
 
     public void notifyFinish() {
         if (animationEnd && loadDataEnd) {
-            setResult(RESULT_OK);
             startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 }

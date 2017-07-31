@@ -15,4 +15,19 @@
     <string name="copy.petrol_station">Combustible</string>
     <string name="copy.local_parking">Parqueaderos</string>
     <string name="copy.save">Guardar</string>
+
+    <string name="copy_by_minute">Por Minuto</string>
+    <string name="copy_by_quarter">Por Fracción</string>
+    <string name="copy_by_hour">Por Hora</string>
+    <string name="copy_free">Gratis</string>
+    <string name="error.complete_all_fields">Completa todo los campos</string>
+
+    <string-array name="parking_charge_type">
+        <item id="500">@string/copy_by_minute</item>
+        <item>@string/copy_by_quarter</item>
+        <item>@string/copy_by_hour</item>
+        <item>@string/copy_free</item>
+    </string-array>
+
+
 </resources>

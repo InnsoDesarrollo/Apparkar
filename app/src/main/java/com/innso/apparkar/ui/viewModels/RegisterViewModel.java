@@ -1,5 +1,6 @@
 package com.innso.apparkar.ui.viewModels;
 
+import android.databinding.ObservableField;
 import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -8,6 +9,7 @@ import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ParkingPrice;
 import com.innso.apparkar.api.models.ReferencePoint;
+import com.innso.apparkar.provider.ResourceProvider;
 
 import javax.inject.Inject;
 
@@ -24,14 +26,19 @@ public class RegisterViewModel extends ParentViewModel {
 
     private PublishSubject<Boolean> finishRegister = PublishSubject.create();
 
+    public ObservableField<String> placeAddress = new ObservableField<>();
+
     private LatLng placeLocation;
 
-    public ParkingViewModel parkingViewModel;
+    private ParkingViewModel parkingViewModel;
 
     public int locationType;
 
     @Inject
     PlacesController placesController;
+
+    @Inject
+    ResourceProvider resourceProvider;
 
     public RegisterViewModel() {
         this.parkingViewModel = new ParkingViewModel();
@@ -65,16 +72,23 @@ public class RegisterViewModel extends ParentViewModel {
     }
 
     private void addNewParking() {
-        showProgressDialog(R.string.copy_please_wait);
-        Parking parking = createParking();
-        placesController.addParkingSlot(parking).subscribe(o -> hideProgressDialog(), this::showServiceError);
+        if (parkingViewModel.isValidToSave()) {
+            showProgressDialog(R.string.copy_please_wait);
+            Parking parking = createParking();
+            placesController.addParkingSlot(parking).subscribe(o -> hideProgressDialog(), this::showServiceError);
+        } else {
+            showSnackBarError(resourceProvider.getString(R.string.error_complete_all_fields));
+        }
     }
 
     private Parking createParking() {
         Parking parking = new Parking();
 
         if (placeLocation != null) {
-            parking.setReferencePoint(new ReferencePoint(placeLocation.latitude, placeLocation.longitude, parkingViewModel.address.get()));
+
+            String address = placeAddress.get().split(",")[0];
+
+            parking.setReferencePoint(new ReferencePoint(placeLocation.latitude, placeLocation.longitude, address));
         }
         parking.setName(parkingViewModel.name.get());
 
@@ -87,13 +101,16 @@ public class RegisterViewModel extends ParentViewModel {
         ParkingPrice prices = null;
         if (parkingViewModel.hasCost.get()) {
             prices = new ParkingPrice(parkingViewModel.costDescription.get());
-            prices.setCarCost(parkingViewModel.cartCost.get());
-            prices.setBikeCost(parkingViewModel.bikeCost.get());
-            prices.setCarCost(parkingViewModel.motorbikeCost.get());
+            prices.setCarCost(Integer.parseInt(parkingViewModel.cartCost.get()));
+            prices.setBikeCost(Integer.parseInt(parkingViewModel.bikeCost.get()));
+            prices.setMotorbikeCost(Integer.parseInt(parkingViewModel.motorbikeCost.get()));
         }
         return prices;
     }
 
+    public ParkingViewModel getParkingViewModel() {
+        return parkingViewModel;
+    }
 
     public Observable<Boolean> showParkingInformation() {
         return showParkingInformation.subscribeOn(AndroidSchedulers.mainThread());
@@ -102,5 +119,4 @@ public class RegisterViewModel extends ParentViewModel {
     public Observable<Boolean> finisRegisterObserver() {
         return finishRegister.subscribeOn(AndroidSchedulers.mainThread());
     }
-
 }

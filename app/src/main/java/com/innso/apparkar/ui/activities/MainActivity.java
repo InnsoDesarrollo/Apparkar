@@ -113,6 +113,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+            googleApiClient.connect();
         }
     }
 
@@ -124,13 +125,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     @Override
     protected void onStart() {
-        googleApiClient.connect();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        googleApiClient.disconnect();
+        if (googleApiClient != null) {
+            googleApiClient.disconnect();
+        }
         super.onStop();
     }
 

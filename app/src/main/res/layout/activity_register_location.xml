@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Dirección: "
-            android:padding="@dimen/spacing_medium" />
+            android:padding="@dimen/spacing_medium"
+            android:text="@={viewModel.placeAddress}" />
 
         <fragment
             android:id="@+id/fragment_map"
@@ -84,7 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_location_type"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:parking="@{viewModel.parkingViewModel}" />
 
         <Button
             android:id="@+id/button_next"

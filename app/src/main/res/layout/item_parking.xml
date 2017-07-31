@@ -101,7 +101,7 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
-                app:parkingCount="@{parking.cartCost}"
+                app:parkingValue="@{parking.cartCost}"
                 tools:text=":97" />
 
             <TextView
@@ -118,7 +118,7 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
-                app:parkingCount="@{parking.motorbikeCost}"
+                app:parkingValue="@{parking.motorbikeCost}"
                 tools:text=":30" />
 
             <TextView
@@ -135,7 +135,7 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
-                app:parkingCount="@{parking.bikeCost}"
+                app:parkingValue="@{parking.bikeCost}"
                 tools:text=":10" />
 
         </RelativeLayout>
