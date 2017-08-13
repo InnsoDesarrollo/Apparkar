@@ -37,7 +37,8 @@ public class BasePlacesFragment extends BaseFragment {
 
     public static final int PARKING_LIST = 0;
     public static final int PETROL_STATION_LIST = 1;
-    public static final int OTHER_PLACER_LIST = 2;
+    public static final int CAR_WASH_LIST = 2;
+    public static final int OTHER_PLACER_LIST = 3;
 
     protected FragmentPlacesListBinding binding;
 
@@ -109,7 +110,7 @@ public class BasePlacesFragment extends BaseFragment {
     }
 
     @Retention(SOURCE)
-    @IntDef({PARKING_LIST, PETROL_STATION_LIST, OTHER_PLACER_LIST})
+    @IntDef({PARKING_LIST, PETROL_STATION_LIST, CAR_WASH_LIST, OTHER_PLACER_LIST})
     public @interface fragmentType {
     }
 }

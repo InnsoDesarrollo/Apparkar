@@ -17,6 +17,11 @@
         android:background="@color/second_blue"
         android:padding="@dimen/spacing_medium">
 
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/view_Konfetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <EditText
             android:id="@+id/editText_address"
             android:layout_width="match_parent"

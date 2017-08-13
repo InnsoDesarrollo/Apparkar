@@ -43,8 +43,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     private BottomSheetBehavior bottomSheetBehavior;
 
-    private View bottomSheet;
-
     private GoogleMap mMap;
 
     private ActivityMapsBinding binding;
@@ -53,7 +51,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     private BasePlacesFragment petrolStationsListFragment;
 
-    private BasePlacesFragment otherPlcaesFragment;
+    private BasePlacesFragment carWashFragment;
+
+    private BasePlacesFragment otherPlacesFragment;
 
     private GoogleApiClient googleApiClient;
 
@@ -85,19 +85,39 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     }
 
     private void initViews() {
-        bottomSheet = binding.bottomSheet;
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        bottomSheetBehavior.setPeekHeight(getResources().getInteger(R.integer.min_height_bottom_map));
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.nestedScroll);
+        binding.bottomNavigation.post(() -> bottomSheetBehavior.setPeekHeight(binding.bottomNavigation.getHeight()));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
         placesController.getParkingSlots().subscribe(this::updateParkingSlots, e -> showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
+        bottomSheetBehavior.setBottomSheetCallback(getBottomBehaviorCallback());
         initFragments();
+    }
+
+    @NonNull
+    private BottomSheetBehavior.BottomSheetCallback getBottomBehaviorCallback() {
+        return new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    binding.buttonAddLocation.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.buttonAddLocation.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        };
     }
 
     private void initFragments() {
         parkingListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.PARKING_LIST);
         petrolStationsListFragment = BasePlacesFragment.newInstance(BasePlacesFragment.PETROL_STATION_LIST);
-        otherPlcaesFragment = BasePlacesFragment.newInstance(BasePlacesFragment.OTHER_PLACER_LIST);
+        carWashFragment = BasePlacesFragment.newInstance(BasePlacesFragment.CAR_WASH_LIST);
+        otherPlacesFragment = BasePlacesFragment.newInstance(BasePlacesFragment.OTHER_PLACER_LIST);
         replaceFragment(parkingListFragment);
     }
 
@@ -182,7 +202,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
                 replaceFragment(petrolStationsListFragment);
                 break;
             case R.id.action_other_places:
-                replaceFragment(otherPlcaesFragment);
+                replaceFragment(otherPlacesFragment);
         }
     }
 
@@ -255,5 +275,4 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
                 startActivity(new Intent(this, RegisterLocationActivity.class));
         }
     }
-
 }

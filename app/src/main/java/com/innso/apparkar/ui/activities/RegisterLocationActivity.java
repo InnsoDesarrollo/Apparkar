@@ -1,6 +1,7 @@
 package com.innso.apparkar.ui.activities;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +28,9 @@ import com.innso.apparkar.ui.adapters.listeners.OnMarkerDragListenerAdapter;
 import com.innso.apparkar.ui.viewModels.RegisterViewModel;
 
 import javax.inject.Inject;
+
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class RegisterLocationActivity extends BaseActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -74,6 +78,7 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+            googleApiClient.connect();
         }
     }
 
@@ -85,13 +90,17 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     @Override
     protected void onStart() {
-        googleApiClient.connect();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        googleApiClient.disconnect();
+        if (googleApiClient != null) {
+            googleApiClient.disconnect();
+        }
         super.onStop();
     }
 
@@ -103,6 +112,7 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     }
 
     private void locationUploaded(boolean forceUpdate) {
+        startKonfetti();
         new AlertDialog.Builder(this)
                 .setTitle(R.string.register_thanks)
                 .setMessage(R.string.register_thanks_message)
@@ -112,6 +122,19 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
                 .setIcon(R.mipmap.ic_app)
                 .setCancelable(false)
                 .show();
+    }
+
+    private void startKonfetti() {
+        binding.viewKonfetti.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(12,12))
+                .setPosition(-50f, binding.viewKonfetti.getWidth() + 50f, -50f, -50f)
+                .stream(300, 5000L);
     }
 
     private void showParkingInformation(boolean show) {

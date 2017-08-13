@@ -16,15 +16,16 @@
         app:showAsAction="withText" />
 
     <item
+        android:id="@+id/action_music"
+        android:enabled="true"
+        android:icon="@drawable/ic_car_wash"
+        android:title="@string/copy.car_wash"
+        app:showAsAction="withText" />
+
+    <item
         android:id="@+id/action_other_places"
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_map"
         android:title="@string/copy.others"
-        app:showAsAction="withText" />
-    <item
-        android:id="@+id/action_music"
-        android:enabled="true"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/copy.settings"
         app:showAsAction="withText" />
 </menu>
