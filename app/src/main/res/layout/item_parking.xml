@@ -85,7 +85,7 @@
                 app:chargeFor="@{parking.costDescription}"
                 tools:text="Cobro por: minuto" />
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/imageView_value_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,47 +94,44 @@
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_toEndOf="@+id/imageView_icon_time"
                 android:layout_toRightOf="@+id/imageView_icon_time"
-                android:drawableLeft="@drawable/ic_car"
-                android:drawableStart="@drawable/ic_car"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_medium"
                 android:paddingStart="@dimen/spacing_medium"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_car"
                 app:parkingValue="@{parking.cartCost}"
                 tools:text=":97" />
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/imageView_value_motorbike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView_icon_time"
                 android:layout_toEndOf="@+id/imageView_value_car"
                 android:layout_toRightOf="@id/imageView_value_car"
-                android:drawableLeft="@drawable/ic_motorbike"
-                android:drawableStart="@drawable/ic_motorbike"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_medium"
                 android:paddingStart="@dimen/spacing_medium"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_motorbike"
                 app:parkingValue="@{parking.motorbikeCost}"
                 tools:text=":30" />
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/imageView_value_bike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView_icon_time"
                 android:layout_toEndOf="@+id/imageView_value_motorbike"
                 android:layout_toRightOf="@id/imageView_value_motorbike"
-                android:drawableLeft="@drawable/ic_bike"
-                android:drawableStart="@drawable/ic_bike"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_medium"
                 android:paddingStart="@dimen/spacing_medium"
                 android:textSize="@dimen/font_small"
                 android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_bike"
                 app:parkingValue="@{parking.bikeCost}"
                 tools:text=":10" />
 
@@ -154,24 +151,24 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/textView_add_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_new_comment"
                 android:text="@string/copy.add_comment"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_small"
+                app:drawableTopCompat="@drawable/ic_new_comment" />
 
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/textView_place_navigator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/font_small"
-                android:drawableTop="@drawable/ic_navigate"
                 android:onClick="@{parking::onNavegate}"
                 android:text="@string/copy.navigate"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_small"
+                app:drawableTopCompat="@drawable/ic_navigate" />
 
         </LinearLayout>
 
@@ -189,12 +186,10 @@
             android:paddingBottom="@dimen/spacing_small"
             android:paddingTop="@dimen/spacing_small">
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/textView_place_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_like"
-                android:drawableStart="@drawable/ic_like"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_small"
                 android:paddingLeft="@dimen/spacing_medium"
@@ -202,15 +197,14 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_small"
+                app:drawableLeftCompat="@drawable/ic_like"
                 app:parkingCount="@{parking.countLikes}"
                 tools:text=":100" />
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/textView_place_dislike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_dislike"
-                android:drawableStart="@drawable/ic_dislike"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_small"
                 android:paddingLeft="@dimen/spacing_medium"
@@ -218,15 +212,14 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_small"
+                app:drawableLeftCompat="@drawable/ic_dislike"
                 app:parkingCount="@{parking.countDislikes}"
                 tools:text=":100" />
 
-            <TextView
+            <com.innso.apparkar.ui.views.VectorTextView
                 android:id="@+id/textView_place_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_comment"
-                android:drawableStart="@drawable/ic_comment"
                 android:gravity="center"
                 android:paddingEnd="@dimen/spacing_small"
                 android:paddingLeft="@dimen/spacing_medium"
@@ -234,6 +227,7 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_small"
+                app:drawableLeftCompat="@drawable/ic_comment"
                 app:parkingCount="@{parking.countComments}"
                 tools:text=":100" />
 

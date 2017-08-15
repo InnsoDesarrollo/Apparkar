@@ -70,12 +70,10 @@
             android:gravity="center"
             android:visibility="@{parking.hasCost ? View.VISIBLE : View.INVISIBLE}">
 
-            <EditText
+            <com.innso.apparkar.ui.views.VectorEditTextView
                 android:id="@+id/imageView_value_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_car"
-                android:drawableStart="@drawable/ic_car"
                 android:enabled="@{parking.hasCost}"
                 android:gravity="center"
                 android:hint="Valor Carro"
@@ -84,14 +82,13 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:text="@={parking.cartCost}"
                 android:textSize="@dimen/font_small"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_car" />
 
-            <EditText
+            <com.innso.apparkar.ui.views.VectorEditTextView
                 android:id="@+id/imageView_value_motorbike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_motorbike"
-                android:drawableStart="@drawable/ic_motorbike"
                 android:enabled="@{parking.hasCost}"
                 android:gravity="center"
                 android:hint="Valor Moto"
@@ -100,14 +97,13 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:text="@={parking.motorbikeCost}"
                 android:textSize="@dimen/font_small"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_motorbike" />
 
-            <EditText
+            <com.innso.apparkar.ui.views.VectorEditTextView
                 android:id="@+id/imageView_value_bike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_bike"
-                android:drawableStart="@drawable/ic_bike"
                 android:enabled="@{parking.hasCost}"
                 android:gravity="center"
                 android:hint="Valor Bicicleta"
@@ -116,7 +112,8 @@
                 android:paddingStart="@dimen/spacing_medium"
                 android:text="@={parking.bikeCost}"
                 android:textSize="@dimen/font_small"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_bike" />
 
         </LinearLayout>
 
