@@ -97,6 +97,8 @@ public class BasePlacesFragment extends BaseFragment {
 
         binding.recyclerPlaces.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        binding.recyclerPlaces.setNestedScrollingEnabled(false);
+
         binding.recyclerPlaces.setAdapter(adapter);
     }
 
