@@ -3,7 +3,7 @@ package com.innso.apparkar.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Parking extends BasePlace{
+public class Parking extends BasePlace {
 
     private transient final String KEY_PENDING_REVIEW = "pending_review";
 

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,16 +25,19 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
+import com.innso.apparkar.api.controller.MapsController;
 import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.BasePlace;
 import com.innso.apparkar.api.models.Parking;
-import com.innso.apparkar.api.models.ReferencePoint;
 import com.innso.apparkar.databinding.ActivityMapsBinding;
+import com.innso.apparkar.databinding.PopupPlaceBinding;
 import com.innso.apparkar.ui.BaseActivity;
+import com.innso.apparkar.ui.adapters.PlaceInfoWindowAdapter;
 import com.innso.apparkar.ui.fragments.BasePlacesFragment;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 import com.innso.apparkar.util.BitmapUtils;
 import com.innso.apparkar.util.ErrorUtil;
+import com.innso.apparkar.util.KeyBoardUtils;
 
 import java.util.List;
 
@@ -65,6 +69,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     @Inject
     PlacesController placesController;
 
+    @Inject
+    MapsController mapsController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -95,6 +102,31 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         placesController.getParkingSlots().subscribe(this::updateParkingSlots, e -> showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
         bottomSheetBehavior.setBottomSheetCallback(getBottomBehaviorCallback());
         initFragments();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        subscribe();
+    }
+
+    private void subscribe() {
+        binding.headerSearch.onQueryChange().subscribe(this::moveMapToZone);
+    }
+
+    private void moveMapToZone(String zone) {
+        if (!TextUtils.isEmpty(zone)) {
+            binding.headerSearch.searchMode();
+            mapsController.getLocationByAddress(zone).subscribe(this::updatePositionByZone, t -> showError(binding.getRoot(), ErrorUtil.getMessageError(t)));
+        } else if (currentLocation != null) {
+            updateMapPosition(currentLocation.getLatitude(), currentLocation.getLongitude());
+            binding.headerSearch.normalMode();
+        }
+    }
+
+    private void updatePositionByZone(LatLng position) {
+        updateMapPosition(position.latitude, position.longitude);
+        binding.headerSearch.normalMode();
     }
 
     @NonNull
@@ -226,6 +258,14 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         });
 
         updateLocation();
+
+        initWindowsInformationMap();
+    }
+
+    private void initWindowsInformationMap() {
+        PopupPlaceBinding popupPlaceBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.popup_place, null, false);
+        PlaceInfoWindowAdapter placeInfoWindowAdapter = new PlaceInfoWindowAdapter(popupPlaceBinding);
+        mMap.setInfoWindowAdapter(placeInfoWindowAdapter);
     }
 
     private CameraPosition getCameraPosition(double lat, double lgn) {
@@ -236,10 +276,15 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
                 .build();
     }
 
+    private void updateMapPosition(double lat, double lgn) {
+        CameraPosition cameraPosition = getCameraPosition(lat, lgn);
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        KeyBoardUtils.hideKeyboard(this, binding.getRoot());
+    }
+
     private void updateLocation() {
         if (currentLocation != null && mMap != null) {
-            CameraPosition cameraPosition = getCameraPosition(currentLocation.getLatitude(), currentLocation.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            updateMapPosition(currentLocation.getLatitude(), currentLocation.getLongitude());
         }
     }
 
@@ -255,16 +300,16 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         if (place instanceof Parking) {
             Parking parking = (Parking) place;
             int marketIcon = parking.hasCost() ? R.drawable.ic_map_parking : R.drawable.ic_map_parking_free;
-            addMarket(parking.getName(), parking.getReferencePoint(), marketIcon);
+            addMarket(PlaceInfoWindowAdapter.PARKING_PLACE, parking.getReferencePoint().getPosition(), marketIcon, parking);
         }
     }
 
-    private void addMarket(String name, ReferencePoint referencePoint, @DrawableRes int res) {
+    private void addMarket(String type, LatLng position, @DrawableRes int res, Object object) {
         BitmapDescriptor bitmap = BitmapUtils.getBitmap(this, res);
         mMap.addMarker(new MarkerOptions()
-                .position(referencePoint.getPosition())
-                .title(name)
-                .icon(bitmap));
+                .position(position)
+                .title(type)
+                .icon(bitmap)).setTag(object);
     }
 
     @Override

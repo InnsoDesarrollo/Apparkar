@@ -23,6 +23,7 @@
                 tools:context="com.innso.apparkar.ui.activities.MainActivity" />
 
             <com.innso.apparkar.ui.views.ViewMainHeader
+                android:id="@+id/header_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"

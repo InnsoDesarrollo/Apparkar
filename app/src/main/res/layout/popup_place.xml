@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="parking"
+            type="com.innso.apparkar.ui.viewModels.ParkingViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView_background_parking"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_toEndOf="@id/imageView_place_icon"
+            android:layout_toRightOf="@id/imageView_place_icon"
+            android:text="@{parking.name}"
+            android:textStyle="bold"
+            tools:text="Parking Name" />
+
+        <TextView
+            android:id="@+id/textView_place_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView_place_name"
+            android:layout_alignStart="@+id/textView_place_name"
+            android:layout_below="@id/textView_place_name"
+            android:text="@{parking.address}"
+            android:textSize="@dimen/font_small"
+            tools:text="Parking Address" />
+
+        <com.innso.apparkar.ui.views.VectorTextView
+            android:id="@+id/textView_place_navigator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/font_small"
+            android:layout_alignEnd="@+id/layout_price_container"
+            android:layout_alignRight="@+id/layout_price_container"
+            android:onClick="@{parking::onNavegate}"
+            android:text="@string/copy.navigate"
+            android:textSize="@dimen/font_small"
+            app:drawableTopCompat="@drawable/ic_navigate" />
+
+        <RelativeLayout
+            android:id="@+id/layout_price_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_place_address"
+            android:layout_marginTop="@dimen/spacing_small">
+
+            <TextView
+                android:id="@+id/textView_values_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:paddingBottom="@dimen/spacing_small"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:chargeFor="@{parking.costDescription}"
+                tools:text="Cobro por: minuto" />
+
+            <com.innso.apparkar.ui.views.VectorTextView
+                android:id="@+id/imageView_value_car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_values_title"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_car"
+                app:parkingValue="@{parking.cartCost}"
+                tools:text=":97" />
+
+            <com.innso.apparkar.ui.views.VectorTextView
+                android:id="@+id/imageView_value_motorbike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_values_title"
+                android:layout_toEndOf="@+id/imageView_value_car"
+                android:layout_toRightOf="@id/imageView_value_car"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_motorbike"
+                app:parkingValue="@{parking.motorbikeCost}"
+                tools:text=":30" />
+
+            <com.innso.apparkar.ui.views.VectorTextView
+                android:id="@+id/imageView_value_bike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_values_title"
+                android:layout_toEndOf="@+id/imageView_value_motorbike"
+                android:layout_toRightOf="@id/imageView_value_motorbike"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_bike"
+                app:parkingValue="@{parking.bikeCost}"
+                tools:text=":10" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

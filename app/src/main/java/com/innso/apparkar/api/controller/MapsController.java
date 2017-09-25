@@ -37,7 +37,7 @@ public class MapsController {
         return Observable.just(address);
     }
 
-    public Observable<LatLng> getLocaionByAddress(String address) {
+    public Observable<LatLng> getLocationByAddress(String address) {
         return mapsApi.getLatLgn(address).subscribeOn(Schedulers.io())
                 .flatMap(this::getLocation)
                 .observeOn(AndroidSchedulers.mainThread());

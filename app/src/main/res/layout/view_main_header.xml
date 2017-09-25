@@ -17,8 +17,7 @@
             android:layout_height="@dimen/spacing_huge"
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_app"
-            android:transitionName="logo" />
+            android:src="@mipmap/ic_app" />
 
         <EditText
             android:id="@+id/editText_parking_zone"
@@ -46,6 +45,16 @@
             android:contentDescription="@string/app_name"
             android:src="@android:drawable/ic_search_category_default"
             android:tint="@color/black_overlay" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/spacing_huge"
+            android:layout_height="@dimen/spacing_huge"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 
