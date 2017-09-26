@@ -31,23 +31,36 @@
             android:padding="@dimen/spacing_medium"
             android:text="@={viewModel.placeAddress}" />
 
-        <fragment
-            android:id="@+id/fragment_map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <RelativeLayout
+            android:id="@+id/layout_map_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/editText_address"
             android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_heightPercent="50%"
-            tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:layout_heightPercent="50%">
+
+            <fragment
+                android:id="@+id/fragment_map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_heightPercent="50%"
+                tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_add_location"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/layout_location_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_map"
+            android:layout_below="@+id/layout_map_container"
             android:layout_marginTop="@dimen/spacing_medium"
             android:gravity="center">
 

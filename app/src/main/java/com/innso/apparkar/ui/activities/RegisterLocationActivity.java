@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
@@ -18,13 +19,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
 import com.innso.apparkar.api.controller.MapsController;
 import com.innso.apparkar.databinding.ActivityRegisterLocationBinding;
 import com.innso.apparkar.ui.BaseActivity;
-import com.innso.apparkar.ui.adapters.listeners.OnMarkerDragListenerAdapter;
 import com.innso.apparkar.ui.viewModels.RegisterViewModel;
 
 import javax.inject.Inject;
@@ -39,13 +37,17 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     private GoogleMap mMap;
 
-    private Location currentLocation;
-
     private RegisterViewModel registerViewModel;
 
     private SupportMapFragment mapFragment;
 
     private ActivityRegisterLocationBinding binding;
+
+    private LatLng centerLocation;
+
+    private Runnable updateAddressRunnable = () -> updateAddress(centerLocation);
+
+    private Handler handlerUpdate = new Handler();
 
     @Inject
     MapsController mapsController;
@@ -132,7 +134,7 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
                 .setFadeOutEnabled(true)
                 .setTimeToLive(2000L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(new Size(12,12))
+                .addSizes(new Size(12, 12))
                 .setPosition(-50f, binding.viewKonfetti.getWidth() + 50f, -50f, -50f)
                 .stream(300, 5000L);
     }
@@ -163,33 +165,11 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     private void addMapListeners() {
 
-        mMap.setOnMarkerDragListener(new OnMarkerDragListenerAdapter() {
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                LatLng latLng = marker.getPosition();
-                currentLocation.setLongitude(latLng.longitude);
-                currentLocation.setLatitude(latLng.latitude);
-                registerViewModel.setLocation(latLng);
-                updateLocationAddress();
-            }
+        mMap.setOnCameraMoveListener(() ->{
+            centerLocation = mMap.getCameraPosition().target;
+            handlerUpdate.removeCallbacks(updateAddressRunnable);
+            handlerUpdate.postDelayed(updateAddressRunnable, 1000);
         });
-    }
-
-    private void updateLocation() {
-
-        if (currentLocation != null && mMap != null) {
-
-            LatLng newPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-
-            registerViewModel.setLocation(newPosition);
-
-            CameraPosition cameraPosition = getCameraPosition(newPosition);
-
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-            mMap.addMarker(new MarkerOptions().position(newPosition).draggable(true));
-        }
     }
 
     @NonNull
@@ -203,9 +183,27 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        updateLocation();
-        updateLocationAddress();
+
+        Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+        if (currentLocation != null && mMap != null) {
+
+            LatLng newPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+            CameraPosition cameraPosition = getCameraPosition(newPosition);
+
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+            updateAddress(newPosition);
+        }
+    }
+
+    private void updateAddress(LatLng position) {
+
+        registerViewModel.setLocation(position);
+
+        mapsController.getAddressDescription(position.latitude, position.longitude)
+                .subscribe(address -> binding.editTextAddress.setText(address));
     }
 
     @Override
@@ -214,13 +212,6 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
-
-    private void updateLocationAddress() {
-        if (currentLocation != null) {
-            mapsController.getAddressDescription(currentLocation.getLatitude(), currentLocation.getLongitude())
-                    .subscribe(address -> binding.editTextAddress.setText(address));
-        }
     }
 
 }
