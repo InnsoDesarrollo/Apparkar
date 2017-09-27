@@ -16,6 +16,7 @@ public class ParkingBinding {
     @BindingAdapter({"parkingValue"})
     public static void setParkingValue(TextView textView, String value) {
         if (!TextUtils.isEmpty(value) && !value.equals("-1")) {
+            textView.setVisibility(View.VISIBLE);
             textView.setText(" : " + value);
         } else {
             textView.setVisibility(View.GONE);
@@ -25,6 +26,7 @@ public class ParkingBinding {
     @BindingAdapter({"parkingCount"})
     public static void setCount(TextView textView, int count) {
         if (count != -1) {
+            textView.setVisibility(View.VISIBLE);
             textView.setText(" : " + count);
         } else {
             textView.setVisibility(View.INVISIBLE);
