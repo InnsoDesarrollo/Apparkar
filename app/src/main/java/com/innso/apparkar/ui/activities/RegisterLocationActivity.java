@@ -70,6 +70,14 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
         mapFragment.getMapAsync(this);
         registerViewModel = new RegisterViewModel();
         binding.setViewModel(registerViewModel);
+        binding.imageViewMapLayer.setOnClickListener(this::changeMapLayer);
+    }
+
+    private void changeMapLayer(View view) {
+        if (mMap != null) {
+            float currentMapType = mMap.getMapType();
+            mMap.setMapType(currentMapType == GoogleMap.MAP_TYPE_SATELLITE ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_SATELLITE);
+        }
     }
 
     @Override
@@ -159,13 +167,13 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(4.6097100, -74.0817500)));
-        mMap.getUiSettings().setRotateGesturesEnabled(false);
+        mMap.getUiSettings().setCompassEnabled(true);
         addMapListeners();
     }
 
     private void addMapListeners() {
 
-        mMap.setOnCameraMoveListener(() ->{
+        mMap.setOnCameraMoveListener(() -> {
             centerLocation = mMap.getCameraPosition().target;
             handlerUpdate.removeCallbacks(updateAddressRunnable);
             handlerUpdate.postDelayed(updateAddressRunnable, 1000);

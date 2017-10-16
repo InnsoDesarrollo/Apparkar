@@ -45,7 +45,6 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_heightPercent="50%"
                 tools:context="com.innso.apparkar.ui.activities.RegisterLocationActivity" />
 
             <android.support.v7.widget.AppCompatImageView
@@ -53,6 +52,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 app:srcCompat="@drawable/ic_add_location"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_map_layer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_circle_white"
+                android:padding="@dimen/spacing_medium"
+                android:layout_margin="@dimen/spacing_medium"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_map_layers" />
 
         </RelativeLayout>
 
