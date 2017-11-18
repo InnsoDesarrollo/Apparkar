@@ -150,13 +150,13 @@ public class RegisterLocationActivity extends BaseActivity implements OnMapReady
     private void showParkingInformation(boolean show) {
         if (show) {
             binding.layoutParkingInformation.getRoot().setVisibility(View.VISIBLE);
-            getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+            binding.layoutMapContainer.setVisibility(View.GONE);
             binding.imageViewWashCar.setVisibility(View.GONE);
             binding.imageViewPetrolStation.setVisibility(View.GONE);
             binding.layoutParkingInformation.editTextParkingName.requestFocus();
         } else {
             binding.layoutParkingInformation.getRoot().setVisibility(View.GONE);
-            getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+            binding.layoutMapContainer.setVisibility(View.VISIBLE);
             binding.imageViewWashCar.setVisibility(View.VISIBLE);
             binding.imageViewPetrolStation.setVisibility(View.VISIBLE);
             binding.editTextAddress.requestFocus();
