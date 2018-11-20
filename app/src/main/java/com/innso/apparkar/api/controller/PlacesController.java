@@ -29,8 +29,7 @@ public class PlacesController {
     public Observable<List<BasePlace>> getParkingSlots() {
         return placesApi.getParkingData(STATUS_ATTRIBUTE, STATUS_APPROVED)
                 .subscribeOn(Schedulers.io())
-                .flatMap(this::convertMapToList)
-                .observeOn(AndroidSchedulers.mainThread());
+                .flatMap(this::convertMapToList);
     }
 
     public Observable<List<BasePlace>> getPetrolStations() {

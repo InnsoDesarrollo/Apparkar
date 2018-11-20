@@ -1,4 +1,4 @@
-package com.innso.apparkar.ui.viewModels;
+package com.innso.apparkar.arch;
 
 
 public class ParentViewModel extends BaseViewModel {
@@ -8,6 +8,5 @@ public class ParentViewModel extends BaseViewModel {
         disposables.add(baseViewModel.observableShowProgress().subscribe(this::eventProgressDialog));
         disposables.add(baseViewModel.observableShowLoading().subscribe(this::eventLoading));
         disposables.add(baseViewModel.observableSnackBar().subscribe(this::eventSnackBar));
-        disposables.addAll(baseViewModel.getDisposablesArray());
     }
 }

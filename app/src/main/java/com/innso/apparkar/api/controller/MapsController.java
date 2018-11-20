@@ -1,12 +1,15 @@
 package com.innso.apparkar.api.controller;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.innso.apparkar.R;
 import com.innso.apparkar.api.models.maps.Geometry;
 import com.innso.apparkar.api.models.maps.MapsResponse;
 import com.innso.apparkar.api.models.maps.Result;
 import com.innso.apparkar.api.service.MapsApi;
+import com.innso.apparkar.provider.ResourceProvider;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,13 +19,16 @@ public class MapsController {
 
     private MapsApi mapsApi;
 
-    public MapsController(MapsApi mapsApi) {
+    private ResourceProvider resourceProvider;
+
+    public MapsController(MapsApi mapsApi, ResourceProvider resourceProvider) {
         this.mapsApi = mapsApi;
+        this.resourceProvider = resourceProvider;
     }
 
     public Observable<String> getAddressDescription(double lat, double lgn) {
         String latLognFormat = lat + "," + lgn;
-        return mapsApi.getAddress(latLognFormat)
+        return mapsApi.getAddress(resourceProvider.getString(R.string.google_api_key), latLognFormat)
                 .subscribeOn(Schedulers.io())
                 .flatMap(this::getAddress)
                 .observeOn(AndroidSchedulers.mainThread());
@@ -38,9 +44,8 @@ public class MapsController {
     }
 
     public Observable<LatLng> getLocationByAddress(String address) {
-        return mapsApi.getLatLgn(address).subscribeOn(Schedulers.io())
-                .flatMap(this::getLocation)
-                .observeOn(AndroidSchedulers.mainThread());
+        return mapsApi.getLatLgn(resourceProvider.getString(R.string.google_api_key), address).subscribeOn(Schedulers.io())
+                .flatMap(this::getLocation);
     }
 
     private Observable<LatLng> getLocation(MapsResponse mapsResponse) {

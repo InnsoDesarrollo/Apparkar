@@ -10,6 +10,7 @@ import com.innso.apparkar.R;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ReferencePoint;
 import com.innso.apparkar.provider.ResourceProvider;
+import com.innso.apparkar.arch.BaseViewModel;
 
 import java.util.Locale;
 

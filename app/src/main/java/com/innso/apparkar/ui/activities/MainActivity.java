@@ -1,5 +1,6 @@
 package com.innso.apparkar.ui.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -25,8 +26,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
-import com.innso.apparkar.api.controller.MapsController;
-import com.innso.apparkar.api.controller.PlacesController;
 import com.innso.apparkar.api.models.BasePlace;
 import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.databinding.ActivityMapsBinding;
@@ -34,14 +33,12 @@ import com.innso.apparkar.databinding.PopupPlaceBinding;
 import com.innso.apparkar.ui.BaseActivity;
 import com.innso.apparkar.ui.adapters.PlaceInfoWindowAdapter;
 import com.innso.apparkar.ui.fragments.BasePlacesFragment;
+import com.innso.apparkar.ui.viewModels.lifecycle.MainActivityViewModel;
 import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 import com.innso.apparkar.util.BitmapUtils;
-import com.innso.apparkar.util.ErrorUtil;
 import com.innso.apparkar.util.KeyBoardUtils;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -66,11 +63,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     private int currentOpenItem = 0;
 
-    @Inject
-    PlacesController placesController;
-
-    @Inject
-    MapsController mapsController;
+    private MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +74,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_maps);
 
-        getComponent().inject(this);
+        initViewModel();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
@@ -94,12 +87,18 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         addListeners();
     }
 
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        viewModel.onParkingPlacesChange().observe(this, this::updateParkingSlots);
+        viewModel.loaderState().observe(this, binding.headerSearch::setLoading);
+        viewModel.onMapLocationChange().observe(this, this::updatePositionByZone);
+    }
+
     private void initViews() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.nestedScroll);
         binding.bottomNavigation.post(() -> bottomSheetBehavior.setPeekHeight(binding.bottomNavigation.getHeight()));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigation);
-        placesController.getParkingSlots().subscribe(this::updateParkingSlots, e -> showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
         bottomSheetBehavior.setBottomSheetCallback(getBottomBehaviorCallback());
         initFragments();
     }
@@ -116,8 +115,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
 
     private void moveMapToZone(String zone) {
         if (!TextUtils.isEmpty(zone)) {
-            binding.headerSearch.searchMode();
-            mapsController.getLocationByAddress(zone).subscribe(this::updatePositionByZone, t -> showError(binding.getRoot(), ErrorUtil.getMessageError(t)));
+            viewModel.findLocationByAddress(zone);
         } else if (currentLocation != null) {
             updateMapPosition(currentLocation.getLatitude(), currentLocation.getLongitude());
             binding.headerSearch.normalMode();

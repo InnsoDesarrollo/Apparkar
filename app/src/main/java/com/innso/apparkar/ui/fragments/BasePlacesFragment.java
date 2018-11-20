@@ -30,6 +30,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -67,7 +68,8 @@ public class BasePlacesFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getPlaces().subscribe(this::updatePlaces, e -> ((BaseActivity) getActivity()).showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
+        getPlaces().observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updatePlaces, e -> ((BaseActivity) getActivity()).showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
     }
 
     public Observable<List<BasePlace>> getPlaces() {

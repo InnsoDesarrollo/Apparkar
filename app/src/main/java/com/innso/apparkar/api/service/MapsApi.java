@@ -9,8 +9,8 @@ import retrofit2.http.Query;
 public interface MapsApi {
 
     @GET("api/geocode/json")
-    Observable<MapsResponse> getAddress(@Query("latlng") String latLgn);
+    Observable<MapsResponse> getAddress(@Query("key") String key, @Query("latlng") String latLgn);
 
     @GET("api/geocode/json")
-    Observable<MapsResponse> getLatLgn(@Query("address") String address);
+    Observable<MapsResponse> getLatLgn(@Query("key") String key, @Query("address") String address);
 }

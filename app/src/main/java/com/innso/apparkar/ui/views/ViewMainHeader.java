@@ -52,6 +52,10 @@ public class ViewMainHeader extends FrameLayout implements TextWatcher {
         return searchQuery.observeOn(AndroidSchedulers.mainThread());
     }
 
+    public void setLoading(boolean loading){
+        if(loading) searchMode(); else normalMode();
+    }
+
     public void searchMode() {
         binding.progressBar.setVisibility(VISIBLE);
         binding.imageViewSearch.setVisibility(INVISIBLE);

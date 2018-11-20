@@ -11,8 +11,6 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class)
 public interface ActivityComponent extends AppComponent {
 
-    void inject(MainActivity baseActivity);
-
     void inject(RegisterLocationActivity registerLocationActivity);
 
     void inject(SplashActivity splashActivity);

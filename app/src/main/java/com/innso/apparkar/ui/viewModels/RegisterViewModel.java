@@ -11,6 +11,7 @@ import com.innso.apparkar.api.models.Parking;
 import com.innso.apparkar.api.models.ParkingPrice;
 import com.innso.apparkar.api.models.ReferencePoint;
 import com.innso.apparkar.provider.ResourceProvider;
+import com.innso.apparkar.arch.ParentViewModel;
 
 import javax.inject.Inject;
 
