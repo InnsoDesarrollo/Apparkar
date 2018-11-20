@@ -24,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.innso.apparkar.R;
 import com.innso.apparkar.api.models.BasePlace;
@@ -38,6 +39,7 @@ import com.innso.apparkar.ui.views.helpers.BottomNavigationViewHelper;
 import com.innso.apparkar.util.BitmapUtils;
 import com.innso.apparkar.util.KeyBoardUtils;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener,
@@ -243,6 +245,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        loadMapTheme();
+
         CameraPosition cameraPosition = getCameraPosition(4.6097100, -74.0817500);
 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -258,6 +262,13 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Bo
         updateLocation();
 
         initWindowsInformationMap();
+    }
+
+    private void loadMapTheme() {
+        int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        if (hourOfDay < 5 || hourOfDay > 18) {
+            mMap.setMapStyle(new MapStyleOptions(getString(R.string.map_night_mode)));
+        }
     }
 
     private void initWindowsInformationMap() {
