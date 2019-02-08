@@ -27,7 +27,7 @@ class MainActivityViewModel : AndroidViewModel() {
     }
 
     fun updateParkingSlots() {
-        disposables.add(placesController.parkingSlots
+        disposables.add(placesController.getParkingSlots()
                 .doOnSubscribe { showLoading() }
                 .doFinally { hideLoading() }
                 .subscribe({ parkingPlaces.postValue(it) }, this::showServiceError))

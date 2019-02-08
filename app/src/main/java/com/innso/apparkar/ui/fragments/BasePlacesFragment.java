@@ -28,8 +28,10 @@ import java.lang.annotation.Retention;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -72,7 +74,7 @@ public class BasePlacesFragment extends BaseFragment {
                 .subscribe(this::updatePlaces, e -> ((BaseActivity) getActivity()).showError(binding.getRoot(), ErrorUtil.getMessageError(e)));
     }
 
-    public Observable<List<BasePlace>> getPlaces() {
+    public Single<List<BasePlace>> getPlaces() {
         switch (fragmentType) {
             case PARKING_LIST:
                 return placesController.getParkingSlots();
